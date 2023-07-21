@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.AdaniOneRai" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/blackLight</item>
+        <item name="colorSecondary">@color/blackLight</item>
+        <item name="colorButtonNormal">@color/blackLight</item>
+    </style>
+
+    <style name="Theme.AdaniOneRai" parent="Base.Theme.AdaniOneRai" />
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slid_in_bottom_sheet</item>
+        <item name="android:windowExitAnimation">@anim/slid_out_bottom_sheet</item>
+    </style>
+    <style name="imageRotate">
+        <item name="android:animation">@anim/rotate</item>
+    </style>
+
+    <style name="CalendarTheme" parent="Theme.AppCompat">
+        <item name="color">#B821DA</item>
+        <item name="android:headerBackground">@color/blue</item>
+        <item name="colorButtonNormal">@color/white</item>
+    </style>
+</resources>
