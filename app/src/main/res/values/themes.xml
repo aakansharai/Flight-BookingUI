@@ -22,4 +22,9 @@
         <item name="android:headerBackground">@color/blue</item>
         <item name="colorButtonNormal">@color/white</item>
     </style>
+
+    <style name="FragmentNavigation">
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="fontFamily">@values/font_certs</item>
+    </style>
 </resources>

@@ -3,12 +3,15 @@ package com.example.adanionerai;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -20,11 +23,14 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +42,8 @@ public class FlightBooking_page extends AppCompatActivity {
 
     // Add return
     TextView returnTitle, returnDate, returnDay;
+
+    FrameLayout fm;
 
     // CLASS & TRAVELLERS
     TextView classLevel, travellersNumberText, departureDate, departureDay;
@@ -140,9 +148,9 @@ public class FlightBooking_page extends AppCompatActivity {
         returnTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View v = View.inflate(FlightBooking_page.this, R.layout.calendar, null);
+                View v = View.inflate(FlightBooking_page.this, R.layout.calendar_return, null);
 
-                calendarDeparture(v, returnDate, returnDay);
+                calendarArrival(v, returnDate, returnDay);
                 roundTrip();
             }
         });
@@ -163,9 +171,9 @@ public class FlightBooking_page extends AppCompatActivity {
         returnTripDateContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View v = View.inflate(FlightBooking_page.this, R.layout.calendar, null);
+                View v = View.inflate(FlightBooking_page.this, R.layout.calendar_return, null);
 
-                calendarDeparture(v, returnDate, returnDay);
+                calendarArrival(v, returnDate, returnDay);
             }
         });
 
@@ -253,6 +261,101 @@ public class FlightBooking_page extends AppCompatActivity {
 
     }
 
+    private void calendarArrival(View v, TextView Date, TextView Day) {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(v);
+
+        ImageView close = dialog.findViewById(R.id.closeDialog);
+
+        Calendar calendarInstance = Calendar.getInstance();
+//        CalendarView calenderView = dialog.findViewById(R.id.calendarOneWay);
+        Button doneCalendar = dialog.findViewById(R.id.doneCalendar);
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+
+        String week[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+//        calenderView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+//            @Override
+//            public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int date) {
+//                int dayNum = calendarView.getFirstDayOfWeek();
+//
+//                int day = (((date%8)+dayNum)%8);
+////                int day = (date %8);
+////                int day = calendarInstance.get(Calendar.DAY_OF_WEEK);
+//
+//                if(day==0){
+//
+//                }
+//                Day.setText(week[day]);
+//                Date.setText(", "+ date +" "+ monthName[month] +" "+ year%2000+" ");
+//                Toast.makeText(FlightBooking_page.this, ""+ date +" "+ monthName[month] +" "+ year%2000+" ",Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+
+        doneCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogC(dialog);
+            }
+        });
+
+        BottomNavigationItemView arrival = dialog.findViewById(R.id.arrival);
+        BottomNavigationItemView departure = dialog.findViewById(R.id.departure);
+
+        Fragment calender = new com.example.adanionerai.Calendar();
+        Fragment calendarRound = new Calendar_roundTrip();
+
+        arrival.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* FragmentManager fm = getFragmentManager();
+
+                // create a FragmentTransaction to begin the transaction and replace the Fragment
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+                // replace the FrameLayout with new Fragment
+                fragmentTransaction.replace(R.id.frame, calendarRound);
+                fragmentTransaction.commit();*/
+                toast("Arrival");
+
+            }
+        });
+        departure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toast("Departure");
+            }
+        });
+
+//        private void loadFragment(Fragment fragment) {
+//            // create a FragmentManager
+//            FragmentManager fm = getFragmentManager();
+//
+//            // create a FragmentTransaction to begin the transaction and replace the Fragment
+//            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+//
+//            // replace the FrameLayout with new Fragment
+//            fm = findViewById(R.id.frame);
+//            fragmentTransaction.replace(R.id.frame, fragment);
+//            fragmentTransaction.commit(); // save the changes
+//        }
+
+    }
 
     private void oneWayTicket() {
         returnTripDateContainer = findViewById(R.id.returnDateContainer);
@@ -499,4 +602,9 @@ public class FlightBooking_page extends AppCompatActivity {
     private void dialogC(@NonNull Dialog dialog) {
         dialog.cancel();
     }
+
+    private void toast(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
 }
