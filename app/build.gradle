@@ -55,6 +55,11 @@ dependencies {
 //    implementation 'androidx.appcompat:appcompat:1.6.1'
 //    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
+    // The view calendar librar
+
+    implementation 'com.kizitonwose.calendar:view:2.0.3'
+    implementation 'com.kizitonwose.calendar:compose:2.0.3'
+
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
 
 }

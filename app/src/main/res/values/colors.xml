@@ -6,4 +6,9 @@
     <color name="blue">#0d66ca</color>
 
 
+    <color name="creamWhite">#F5F5F2</color>
+    <color name="greyBackground">#4D959593</color>
+    <color name="grey">#8B959593</color>
+
+
 </resources>

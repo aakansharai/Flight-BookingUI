@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="10dp"
+    android:weightSum="6"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#555555"
-        android:text="Button" />
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Sun" />
 
-    <Button
-        android:id="@+id/btn1"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#AC2525"
-        android:text="Button" />
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Mon" />
 
-    <Button
-        android:id="@+id/btn2"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#8497DF"
-        android:text="Button" />
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Tue" />
 
-    <Button
-        android:id="@+id/btn3"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#E329D0"
-        android:text="Button" />
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Thu" />
 
-    <Button
-        android:id="@+id/btn4"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#8497DF"
-        android:text="Button" />
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Fri" />
 
-    <Button
-        android:id="@+id/btn5"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#A7DF84"
-        android:text="Button" />
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Sat" />
 
 </LinearLayout>
