@@ -398,20 +398,43 @@
                     app:layout_constraintTop_toBottomOf="@+id/description"
                     tools:layout_editor_absoluteX="20dp" />
 
-                <EditText
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/background_circle_black"
-                    android:hint="Email ID"
                     android:paddingHorizontal="15dp"
-                    android:paddingVertical="20dp"
+                    android:paddingVertical="15dp"
                     android:textColor="@color/blackLight"
                     android:textColorHint="@color/blackLight"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/FirstName" />
+                    app:layout_constraintTop_toBottomOf="@+id/FirstName">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/country_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:ccp_autoDetectCountry="true"
+                        app:ccp_defaultNameCode="IND"
+                        app:ccp_showFlag="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Mobile number"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/blackLight"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/country_code"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <CheckBox
@@ -419,6 +442,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
+                    android:buttonTint="@color/blue"
                     android:text="Get Booking Details &amp; Updates on"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/Email" />
@@ -427,6 +451,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:buttonTint="@color/blue"
                     android:text="Use GST number for this booking"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/checkBox" />

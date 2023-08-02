@@ -53,10 +53,12 @@ public class FlightBooking_page extends AppCompatActivity {
     RadioButton oneWay, roundTrip;
     RecyclerView arrivalCity;
     Button searchFlightBTN;
+    String TravellerCount;
+    int travCount;
     ConstraintLayout TC, DepartureDate, returnTripDateContainer;
-    ArrayList<Integer> AdultsCounts = null;
-    ArrayList<Integer> childrenCounts = null;
-    ArrayList<Integer> infantsCounts = null;
+//    ArrayList<Integer> AdultsCounts = null;
+//    ArrayList<Integer> childrenCounts = null;
+//    ArrayList<Integer> infantsCounts = null;
     ArrayList<String> COUNT = new ArrayList<>();
     ArrayList<TravellersDetailsList> travellersDetailsLists = new ArrayList<TravellersDetailsList>();
     ArrayList<city> cities = new ArrayList<>();
@@ -210,12 +212,12 @@ public class FlightBooking_page extends AppCompatActivity {
         searchFlightBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(COUNT.size()==0){
-                    COUNT.add(0, "1");
+                if(travCount==0){
+                    travCount=1;
                 }
                 Intent intent = new Intent(getApplicationContext(), TravellersDetails.class);
-                intent.putStringArrayListExtra("TC", COUNT);
-                toast(""+COUNT.size());
+                intent.putExtra("TC", travCount);
+                toast(""+travCount);
                 startActivity(intent);
             }
         });
@@ -842,13 +844,14 @@ public class FlightBooking_page extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                COUNT.add(AdultCount.getText().toString());
-                COUNT.add(ChildrenCount.getText().toString());
-                COUNT.add(InfantCount.getText().toString());
+
+                TravellerCount = AdultCount.getText().toString()+ChildrenCount.getText().toString()+InfantCount.getText().toString();
+
 //                travellersDetailsLists.add(new TravellersDetailsList(AdultsCounts, childrenCounts, infantsCounts));
 //                AdultsCounts.add(Integer.parseInt(AdultCount.getText().toString()));
 //                childrenCounts.add((Integer.parseInt(ChildrenCount.getText().toString())));
 //                infantsCounts.add((Integer.parseInt(InfantCount.getText().toString())));
+                travCount = ((Integer.parseInt(AdultCount.getText().toString()))*100)+((Integer.parseInt(ChildrenCount.getText().toString()))*10)+(Integer.parseInt(InfantCount.getText().toString()));
                 int travellers = (Integer.parseInt(AdultCount.getText().toString()))+(Integer.parseInt(ChildrenCount.getText().toString()))+(Integer.parseInt(InfantCount.getText().toString()));
                 travellers(travellers);
                 selectedClass(eco, priEco, Business);
