@@ -81,7 +81,7 @@ public class FlightBooking_page extends AppCompatActivity {
         TC = findViewById(R.id.travellersAndClassContainer);
         DepartureDate = findViewById(R.id.departureDateSelection);
 
-        oneWay = findViewById(R.id.oneWay);
+        oneWay = findViewById(R.id.TicketWayDetail);
         returnTripDateContainer = findViewById(R.id.returnDateContainer);
         roundTrip = findViewById(R.id.roundWay);
         arrivalCity = findViewById(R.id.arrivalCityList);

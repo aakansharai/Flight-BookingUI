@@ -1,4 +1,4 @@
-package com.example.adanionerai;
+package com.example.adanionerai.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.adanionerai.R;
 
 public class TravellersCountDetails_Adapter extends RecyclerView.Adapter<TravellersCountDetails_Adapter.MyViewHolder> {
 

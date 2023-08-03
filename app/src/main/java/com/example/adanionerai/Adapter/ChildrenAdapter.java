@@ -1,4 +1,4 @@
-package com.example.adanionerai;
+package com.example.adanionerai.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.adanionerai.R;
 
 import java.util.Calendar;
 

@@ -4,22 +4,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.adanionerai.Adapter.TravellersCountDetails_Adapter;
+
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class TravellersDetails extends AppCompatActivity {
 
     ArrayList<String> count = new ArrayList<>();
+    Button proceedToPayment;
     RecyclerView td;
+//    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travellers_details);
+
+        proceedToPayment = findViewById(R.id.proceedToPayment);
 
         int arr = getIntent().getExtras().getInt("TC");
         int rem;
@@ -58,6 +66,14 @@ public class TravellersDetails extends AppCompatActivity {
         TravellersCountDetails_Adapter travellersCountDetailsAdapter = new TravellersCountDetails_Adapter(adult,children,infant, TravellersDetails.this);
 
         td.setAdapter(travellersCountDetailsAdapter);
+
+        proceedToPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), Payment.class);
+                startActivity(i);
+            }
+        });
 
     }
 }

@@ -1,4 +1,4 @@
-package com.example.adanionerai;
+package com.example.adanionerai.Adapter;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -13,13 +13,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.adanionerai.R;
+
 import java.util.Calendar;
 
-public class InfantAdapter extends RecyclerView.Adapter<InfantAdapter.MyViewHolder> {
+public class AdultAdapter extends RecyclerView.Adapter<AdultAdapter.MyViewHolder> {
 
     int count;
     Context ctx;
-    public InfantAdapter(int adultCount, Context context) {
+    public AdultAdapter(int adultCount, Context context) {
         this.count = adultCount;
         this.ctx = context;
     }
@@ -27,7 +29,7 @@ public class InfantAdapter extends RecyclerView.Adapter<InfantAdapter.MyViewHold
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.infant_item_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adult_item_layout, parent, false);
         MyViewHolder viewHolder = new MyViewHolder(view);
         return viewHolder;
     }
@@ -35,7 +37,7 @@ public class InfantAdapter extends RecyclerView.Adapter<InfantAdapter.MyViewHold
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.title.setText("Infant "+(position+1));
+        holder.title.setText("Adults "+(position+1));
 
         holder.calendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,14 +50,14 @@ public class InfantAdapter extends RecyclerView.Adapter<InfantAdapter.MyViewHold
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         view.getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        // on below line we are setting date to our edit text.
-                        holder.DOB.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // on below line we are setting date to our edit text.
+                                holder.DOB.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
-                    }
-                },
+                            }
+                        },
                         year, month, day);
                 datePickerDialog.show();
 
@@ -76,8 +78,9 @@ public class InfantAdapter extends RecyclerView.Adapter<InfantAdapter.MyViewHold
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.TravellerType);
-            calendar = itemView.findViewById(R.id.calenderImageDOBInfant);
-            DOB = itemView.findViewById(R.id.infantDOB);
+            calendar = itemView.findViewById(R.id.calenderImageDOBAdult);
+            DOB = itemView.findViewById(R.id.adultDOB);
+
         }
     }
 }

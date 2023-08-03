@@ -190,6 +190,19 @@
                         app:layout_constraintStart_toEndOf="@+id/bulletPoint2"
                         app:layout_constraintTop_toBottomOf="@+id/cityNameDeparture" />
 
+                    <TextView
+                        android:id="@+id/bulletPoint3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="•"
+                        android:textStyle="bold"
+                        android:textColor="@color/blackLight"
+                        android:textSize="14sp"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/travellersCount"
+                        app:layout_constraintStart_toEndOf="@+id/travellersCount"
+                        app:layout_constraintTop_toTopOf="@+id/travellersCount" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -444,7 +457,7 @@
                     android:id="@+id/viewPayment1"
                     android:layout_height="1dp"
                     android:layout_width="match_parent"
-                    android:background="#60575555"
+                    android:background="#B5201F1F"
                     android:layout_marginTop="10dp"
                     app:layout_constraintTop_toBottomOf="@+id/UPIContainer"/>
 
@@ -582,7 +595,7 @@
                     android:id="@+id/viewPayment2"
                     android:layout_height="1dp"
                     android:layout_width="match_parent"
-                    android:background="#60575555"
+                    android:background="#B5201F1F"
                     android:layout_marginTop="10dp"
                     app:layout_constraintTop_toBottomOf="@+id/creditDebitContainer"/>
 
@@ -820,7 +833,7 @@
                     android:id="@+id/viewPayment3"
                     android:layout_height="1dp"
                     android:layout_width="match_parent"
-                    android:background="#60575555"
+                    android:background="#B5201F1F"
                     android:layout_marginTop="10dp"
                     app:layout_constraintTop_toBottomOf="@+id/netBankingContainer"/>
 
@@ -940,7 +953,7 @@
                     android:id="@+id/viewPayment4"
                     android:layout_height="1dp"
                     android:layout_width="match_parent"
-                    android:background="#60575555"
+                    android:background="#B5201F1F"
                     android:layout_marginTop="10dp"
                     app:layout_constraintTop_toBottomOf="@+id/WalletContainer"/>
 
@@ -1053,7 +1066,7 @@
                     android:id="@+id/viewPayment5"
                     android:layout_height="1dp"
                     android:layout_width="match_parent"
-                    android:background="#60575555"
+                    android:background="#B5201F1F"
                     app:layout_constraintTop_toBottomOf="@+id/EMIContainer"/>
 
 
