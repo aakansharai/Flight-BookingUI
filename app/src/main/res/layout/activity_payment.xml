@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="3"
+    tools:context=".Payment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:background="@color/creamWhite"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="20dp">
+
+        <ImageView
+            android:id="@+id/backToTravellerIMG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/paymentTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="Payment"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/backToTravellerIMG"
+            app:layout_constraintStart_toEndOf="@+id/backToTravellerIMG"
+            app:layout_constraintTop_toTopOf="@+id/backToTravellerIMG" />
+
+
+        <TextView
+            android:id="@+id/steps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Steps"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/stepsCount"
+            app:layout_constraintEnd_toStartOf="@+id/stepsCount"
+            app:layout_constraintTop_toTopOf="@+id/stepsCount" />
+
+        <TextView
+            android:id="@+id/stepsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3/3"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2.4">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/detailsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/oneWay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="20dp"
+                    android:background="@drawable/blue_light_bg"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/cityNameDeparture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="New Delhi"
+                        android:textColor="@color/blackLight"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/ArrowRight"
+                        android:layout_width="30dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/round_way"
+                        android:layout_marginStart="20dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/cityNameDeparture"
+                        app:layout_constraintStart_toEndOf="@+id/cityNameDeparture"
+                        app:layout_constraintTop_toTopOf="@+id/cityNameDeparture"
+                        app:tint="@color/blackLight" />
+
+                    <TextView
+                        android:id="@+id/cityNameArrivalP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="Mumbai"
+                        android:textColor="@color/blackLight"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ArrowRight"
+                        app:layout_constraintStart_toEndOf="@+id/ArrowRight"
+                        app:layout_constraintTop_toTopOf="@+id/ArrowRight" />
+
+
+                    <TextView
+                        android:id="@+id/one_TwoWay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="One Way"
+                        android:textColor="@color/blackLight"
+                        android:textSize="12sp"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintStart_toStartOf="@+id/cityNameDeparture"
+                        app:layout_constraintTop_toBottomOf="@+id/cityNameDeparture" />
+
+                    <TextView
+                        android:id="@+id/bulletPoint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="•"
+                        android:textStyle="bold"
+                        android:textColor="@color/blackLight"
+                        android:textSize="14sp"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/one_TwoWay"
+                        app:layout_constraintStart_toEndOf="@+id/one_TwoWay"
+                        app:layout_constraintTop_toTopOf="@+id/one_TwoWay" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="06 July"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/blackLight"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/bulletPoint"
+                        app:layout_constraintTop_toBottomOf="@+id/cityNameDeparture" />
+
+                    <TextView
+                        android:id="@+id/bulletPoint2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="•"
+                        android:textStyle="bold"
+                        android:textColor="@color/blackLight"
+                        android:textSize="14sp"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/date"
+                        app:layout_constraintStart_toEndOf="@+id/date"
+                        app:layout_constraintTop_toTopOf="@+id/date" />
+
+
+                    <TextView
+                        android:id="@+id/travellersCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="1 Traveller"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/blackLight"
+                        android:textSize="12sp"
+                        app:layout_constraintStart_toEndOf="@+id/bulletPoint2"
+                        app:layout_constraintTop_toBottomOf="@+id/cityNameDeparture" />
+
+                    <TextView
+                        android:id="@+id/bulletPoint3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="•"
+                        android:textStyle="bold"
+                        android:textColor="@color/blackLight"
+                        android:textSize="14sp"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/travellersCount"
+                        app:layout_constraintStart_toEndOf="@+id/travellersCount"
+                        app:layout_constraintTop_toTopOf="@+id/travellersCount" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/couponContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/green_light_bg"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/oneWay">
+
+
+                    <ImageView
+                        android:id="@+id/couponIMG"
+                        android:layout_width="30dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/star_green"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="#14B83D" />
+
+                    <TextView
+                        android:id="@+id/couponCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ADDH65"
+                        android:textColor="#14B83D"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/couponIMG"
+                        app:layout_constraintStart_toEndOf="@+id/couponIMG"
+                        app:layout_constraintTop_toTopOf="@+id/couponIMG" />
+
+                    <TextView
+                        android:id="@+id/couponCodeApplied"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Coupon Applied. (T&amp;C applied)"
+                        android:textColor="#14B83D"
+                        android:textSize="14sp"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/couponCode"
+                        app:layout_constraintStart_toEndOf="@+id/couponCode"
+                        app:layout_constraintTop_toTopOf="@+id/couponCode"
+                        app:layout_constraintVertical_bias="1.0" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="10dp"
+                android:background="#19787777"
+                app:layout_constraintTop_toBottomOf="@+id/detailsContainer"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/adaniRewardsCoinsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view1">
+
+                <CheckBox
+                    android:id="@+id/checkBox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/blue"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/AdaniRewards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Adani Rewards"
+                    android:textColor="@color/blackLight"
+                    android:layout_marginStart="15dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/checkBox2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Balance Point 0."
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/blackLight"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/AdaniRewards"
+                    app:layout_constraintTop_toBottomOf="@+id/AdaniRewards" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="10dp"
+                android:background="#19787777"
+                app:layout_constraintTop_toBottomOf="@+id/adaniRewardsCoinsContainer"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/PaymentOptionsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view2">
+
+                <TextView
+                    android:id="@+id/PaymentOptionsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Payment Options"
+                    android:textColor="@color/blackLight"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="10dp"
+                android:background="#19787777"
+                app:layout_constraintTop_toBottomOf="@+id/PaymentOptionsContainer"/>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/fareSummeryOfPayments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view4">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/text_background"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="20dp"
+                    android:text="@string/by_continuing_i_accept_the_t_amp_c"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/fareSummery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Fare Summary"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+                <TextView
+                    android:id="@+id/DetailsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/details"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fareSummery"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/bareFace"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Bare face"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fareSummery" />
+
+                <TextView
+                    android:id="@+id/bareFaceAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹10,000"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/bareFace"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/bareFace" />
+
+
+                <TextView
+                    android:id="@+id/taxesAndFees"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Taxes &amp; Fees"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bareFace" />
+
+
+                <TextView
+                    android:id="@+id/TaxesAndFeesAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹12,000"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/taxesAndFees"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/taxesAndFees" />
+
+                <TextView
+                    android:id="@+id/couponDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Coupon discount"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/taxesAndFees" />
+
+
+                <TextView
+                    android:id="@+id/couponDiscountAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="- ₹1,000"
+                    android:textColor="#07B534"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/couponDiscount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/couponDiscount" />
+
+                <TextView
+                    android:id="@+id/convinienceFee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Convenience Fee "
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/couponDiscount" />
+
+
+                <TextView
+                    android:id="@+id/convinienceFeeAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="₹400"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/convinienceFee"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/convinienceFee" />
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@+id/convinienceFee" />
+
+
+                <TextView
+                    android:id="@+id/total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Total Amount"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+                <TextView
+                    android:id="@+id/totalAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10,000"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/total"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/total" />
+
+                <View
+                    android:id="@+id/view6"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@+id/totalAmount" />
+
+                <TextView
+                    android:id="@+id/coinDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/earn_coin_bg"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="15dp"
+                    android:text="Earn 99 Reward points on this transaction"
+                    android:textColor="@color/blackLight"
+                    android:textSize="16sp"
+                    app:drawableStartCompat="@drawable/coin_img"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view6" />
+
+                <View
+                    android:id="@+id/view10"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/grey"
+                    app:layout_constraintTop_toBottomOf="@+id/coinDescription"
+                    tools:layout_editor_absoluteX="20dp" />
+
+                <TextView
+                    android:id="@+id/safeAndSecurePayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="15dp"
+                    android:gravity="center_vertical"
+                    android:text="  100% Safe and Secure Payment"
+                    android:textColor="@color/blackLight"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view10"
+                    app:drawableStartCompat="@drawable/secure" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".3">
+
+        <View
+            android:id="@+id/viewBelow"
+            android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="@color/blackLight"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/bottomTotalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="10dp"
+            android:text="₹10,300"
+            android:textColor="@color/blackLight"
+            android:textColorHint="@color/blackLight"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/viewDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@string/viewDetails"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/bottomTotalAmount"
+            app:layout_constraintStart_toStartOf="@+id/bottomTotalAmount"
+            app:layout_constraintTop_toBottomOf="@+id/bottomTotalAmount" />
+
+        <Button
+            android:id="@+id/SearchFlightBTN"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:background="@drawable/blue_button"
+            android:paddingVertical="10dp"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
