@@ -46,7 +46,7 @@
         android:layout_marginHorizontal="20dp"
         android:background="@drawable/search_bg"
         android:drawableStart="@drawable/search"
-        android:hint="Search for city name or airport"
+        android:hint="Search Bank"
         android:inputType="text"
         android:paddingHorizontal="15dp"
         android:paddingVertical="15dp"

@@ -1,4 +1,4 @@
-package com.example.adanionerai.Adapter;
+package com.example.adanionerai.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,26 +13,26 @@ import com.example.adanionerai.R;
 
 import java.util.ArrayList;
 
-public class SelectBankAdapter extends RecyclerView.Adapter<SelectBankAdapter.MyViewHolder> {
+public class ViewOtherBankAdapter extends RecyclerView.Adapter<ViewOtherBankAdapter.MyViewHolder> {
 
     ArrayList<String> bankName;
     Context ctx;
 
-    public SelectBankAdapter(ArrayList<String> bankName, Context ctx) {
+    public ViewOtherBankAdapter(ArrayList<String> bankName, Context ctx) {
         this.bankName = bankName;
         this.ctx = ctx;
     }
 
     @NonNull
     @Override
-    public SelectBankAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.bank_name_item_text, parent, false);
         MyViewHolder view = new MyViewHolder(v);
         return view;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SelectBankAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.nameBank.setText(bankName.get(position));
     }
 
@@ -44,7 +44,7 @@ public class SelectBankAdapter extends RecyclerView.Adapter<SelectBankAdapter.My
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView nameBank;
+        TextView nameBank, title;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 

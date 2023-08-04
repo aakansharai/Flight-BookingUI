@@ -399,7 +399,7 @@
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/UPI_options"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@+id/upi_tagIMG">
@@ -439,6 +439,7 @@
                             android:id="@+id/FirstName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:layout_marginTop="20dp"
                             android:background="@drawable/background_circle_black"
                             android:hint="Email ID"
@@ -895,7 +896,7 @@
                         android:id="@+id/wallet_options"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/walletIMG">
@@ -914,7 +915,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:buttonTint="@color/grey"
+                                android:drawableStart="@drawable/amazonpay"
                                 android:text="  Amazon Pay" />
 
                             <RadioButton
@@ -922,7 +923,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:buttonTint="@color/grey"
+                                android:drawableStart="@drawable/amazonpay"
                                 android:text="  Mobikwik" />
 
                             <RadioButton
@@ -931,7 +932,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
                                 android:drawableStart="@drawable/paytm"
-                                android:buttonTint="@color/grey"
                                 android:text="  Paytm" />
 
                             <RadioButton
@@ -939,7 +939,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
-                                android:buttonTint="@color/grey"
+                                android:drawableStart="@drawable/phonepe"
                                 android:text="  PhonePe" />
 
                         </RadioGroup>

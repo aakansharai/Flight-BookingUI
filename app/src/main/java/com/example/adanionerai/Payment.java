@@ -13,20 +13,19 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.adanionerai.Adapter.SelectBankAdapter;
-import com.example.adanionerai.Adapter.TravellerNameAdapter;
+import com.example.adanionerai.Adapters.SelectBankAdapter;
+import com.example.adanionerai.Adapters.TravellerNameAdapter;
+import com.example.adanionerai.Adapters.ViewOtherBankAdapter;
 import com.example.adanionerai.ModelClass.NameModel;
 
 import java.util.ArrayList;
 
 public class Payment extends AppCompatActivity {
 
-    TextView adaniRewardBalance, selectbank;
+    TextView adaniRewardBalance, selectbank, viewOtherBank;
     ConstraintLayout adaniBalance, UPI, CreditDebit, NetBanking, Wallet, EMI, ticketDetail;
     ImageView dropDown1, dropUp1, dropDown2, dropUp2, dropDown3, dropUp3, dropDown4, dropUp4, dropDown5, dropUp5;
 
@@ -39,6 +38,7 @@ public class Payment extends AppCompatActivity {
         adaniRewardBalance = findViewById(R.id.adaniRewardBalanceAmount);
         adaniBalance = findViewById(R.id.adaniRewardsCoinsContainer);
         selectbank = findViewById(R.id.selectBank);
+        viewOtherBank = findViewById(R.id.viewOtherBank);
 
         UPI = findViewById(R.id.UPI_options);
         CreditDebit = findViewById(R.id.CreditDebit_options);
@@ -62,6 +62,8 @@ public class Payment extends AppCompatActivity {
             adaniBalance.setClickable(false);
             adaniBalance.setBackgroundColor(Color.LTGRAY);
         }
+
+        //----------------   UPI
 
         dropDown1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +89,12 @@ public class Payment extends AppCompatActivity {
                 EMI.setVisibility(View.GONE);
             }
         });
+
+
+
+
+
+        //------------------ NET BANKING
         dropDown2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -201,6 +209,72 @@ public class Payment extends AppCompatActivity {
                 View v = View.inflate(Payment.this, R.layout.bank_options_layout, null);
 
                 selectYourBank(v);
+            }
+        });
+
+        viewOtherBank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                View v = View.inflate(Payment.this, R.layout.bank_options_layout, null);
+
+                selectBank(v);
+            }
+        });
+
+    }
+
+    private void selectBank(View v) {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(v);
+
+        RecyclerView bankList;
+        TextView selectBankTitle;
+        ImageView close;
+
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+        close = dialog.findViewById(R.id.closeDialog);
+        selectBankTitle = dialog.findViewById(R.id.selectYourBankTitle);
+
+        selectBankTitle.setText("View Other Banks");
+
+        ArrayList<String> bankNames = new ArrayList<>();
+        bankNames.add("Airtel Payments Bank");
+        bankNames.add(" Andhra Bank");
+        bankNames.add("Corporation Bank");
+        bankNames.add("Bank of India");
+        bankNames.add("Bank of Baroda - Retail Banking");
+        bankNames.add("Bank of Maharashtra");
+        bankNames.add("Catholic Syrian Bank");
+        bankNames.add("Central Bank");
+        bankNames.add("City Union Bank");
+        bankNames.add("Cosmos Bank");
+        bankNames.add("DCB Bank");
+        bankNames.add("Deutsche Bank");
+        bankNames.add("Dhanalakshmi Bank");
+        bankNames.add("Federal Bank");
+        bankNames.add("IDBI Bank");
+        bankNames.add("IDFC FIRST Bank");
+        bankNames.add("Indian Bank");
+        bankNames.add("Indian Overseas Bank");
+        bankNames.add("Indusind Bank");
+        bankNames.add("Janata Sahakari Bank Ltd Pune");
+        bankNames.add("Jammu & Kashmir Bank");
+
+        bankList = dialog.findViewById(R.id.bankList);
+        ViewOtherBankAdapter adapterBankName = new ViewOtherBankAdapter(bankNames, getApplicationContext());
+        bankList.setLayoutManager(new LinearLayoutManager(bankList.getContext()));
+        bankList.setAdapter(adapterBankName);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
             }
         });
 
