@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.example.adanionerai.Adapters.OneWayFlightListAdapter;
+import com.example.adanionerai.Adapters.ReturnFlightListAdapter;
 import com.example.adanionerai.Adapters.VoucherAdapter;
 import com.example.adanionerai.ModelClass.FlightList;
 import com.example.adanionerai.ModelClass.VoucherData;
@@ -65,8 +66,9 @@ public class FlightListRoundTrip extends AppCompatActivity {
         oneWayList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
         oneWayList.setAdapter(oneWayFlightListAdapter);
 
+        ReturnFlightListAdapter returnFlightListAdapter = new ReturnFlightListAdapter(flightList, FlightListRoundTrip.this);
         ReturnList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        ReturnList.setAdapter(oneWayFlightListAdapter);
+        ReturnList.setAdapter(returnFlightListAdapter);
 
 
     }
