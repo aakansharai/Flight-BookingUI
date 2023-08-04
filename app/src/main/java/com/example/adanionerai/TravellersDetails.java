@@ -65,7 +65,7 @@ public class TravellersDetails extends AppCompatActivity {
         td = findViewById(R.id.listOfTravellers);
 
         td.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        TravellersCountDetails_Adapter travellersCountDetailsAdapter = new TravellersCountDetails_Adapter(adult,children,infant, TravellersDetails.this);
+        TravellersCountDetails_Adapter travellersCountDetailsAdapter = new TravellersCountDetails_Adapter(adult, children, infant, TravellersDetails.this);
 
         td.setAdapter(travellersCountDetailsAdapter);
 

@@ -176,7 +176,7 @@ public class FlightBooking_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 View v = View.inflate(FlightBooking_page.this, R.layout.calendar, null);
-                selectCurrentView[1] = calendarArrival(v, returnDate, returnDay);
+                selectCurrentView[1] = calendarArrival(v, returnDate, returnDay, departureDate, departureDay);
             }
         });
 
@@ -185,7 +185,7 @@ public class FlightBooking_page extends AppCompatActivity {
             public void onClick(View view) {
                 View v = View.inflate(FlightBooking_page.this, R.layout.calendar, null);
 
-                calendarArrival(v, returnDate, returnDay);
+                calendarArrival(v, returnDate, returnDay, departureDate, departureDay);
                 roundTrip();
             }
         });
@@ -213,7 +213,7 @@ public class FlightBooking_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(travCount==0){
-                    travCount=1;
+                    travCount=100;
                 }
                 Intent intent = new Intent(getApplicationContext(), TravellersDetails.class);
                 intent.putExtra("TC", travCount);
@@ -365,7 +365,7 @@ public class FlightBooking_page extends AppCompatActivity {
         container.textView.setTextColor(Color.WHITE);
     }
 
-    private DayViewContainer calendarArrival(View v, TextView Date, TextView Day) {
+    private DayViewContainer calendarArrival(View v, TextView Date, TextView Day, TextView DepartureDate, TextView DepartureDay) {
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -414,8 +414,8 @@ public class FlightBooking_page extends AppCompatActivity {
         calendarView.setOrientation(RecyclerView.VERTICAL);
         calendarView.setMonthHeaderResource(R.layout.title_calendar);
 
-        final String[] weekDayOfMonth = new String[1];
-        final String[] DateOfMonth= new String[1];
+        final String[] weekDayOfMonth = new String[2];
+        final String[] DateOfMonth= new String[2];
         final DayViewContainer[] selectCurrentView = new DayViewContainer[2];
 
         calendarView.setDayBinder(new MonthDayBinder<DayViewContainer>() {
@@ -476,9 +476,9 @@ public class FlightBooking_page extends AppCompatActivity {
                         selectCurrentView[1].textView.setBackground(null);
                         if(selectCurrentView[0]!=null){
                             DateEnable(selectCurrentView[0]);
+                            Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
                         }
 
-                        Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
                         Log.e("DISELECTED_DATE", selectCurrentView[1].textView.getText()+"");
 
 
@@ -522,8 +522,12 @@ public class FlightBooking_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 toast("DONE");
+//                DepartureDay.setText(weekDayOfMonth[0]);
+//                DepartureDate.setText(DateOfMonth[0]);
+
                 Day.setText(weekDayOfMonth[0]);
                 Date.setText(DateOfMonth[0]);
+
                 dialog.cancel();
             }
         });

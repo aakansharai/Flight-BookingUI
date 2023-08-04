@@ -39,8 +39,6 @@ public class TravellersCountDetails_Adapter extends RecyclerView.Adapter<Travell
         AdultAdapter adultAdapter = new AdultAdapter(adult, ctx);
         holder.adult.setAdapter(adultAdapter);
 
-
-
         holder.children.setLayoutManager(new LinearLayoutManager(ctx.getApplicationContext()));
         ChildrenAdapter childrenAdapter = new ChildrenAdapter(children, ctx);
         holder.children.setAdapter(childrenAdapter);

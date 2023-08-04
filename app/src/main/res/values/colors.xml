@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="blackLight">#201F1F</color>
+    <color name="blackLight">#373636</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#0d66ca</color>
 
@@ -9,6 +9,7 @@
     <color name="creamWhite">#F5F5F2</color>
     <color name="greyBackground">#4D959593</color>
     <color name="grey">#8B959593</color>
+    <color name="greyText">#C35A5A59</color>
 
 
 </resources>
