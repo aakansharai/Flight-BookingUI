@@ -1,6 +1,7 @@
 package com.example.adanionerai;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,7 @@ public class TravellersDetails extends AppCompatActivity {
 
     ArrayList<String> count = new ArrayList<>();
     Button proceedToPayment;
+    ConstraintLayout billingAddress;
     RecyclerView td;
 //    @SuppressLint("MissingInflatedId")
     @Override
@@ -27,6 +29,7 @@ public class TravellersDetails extends AppCompatActivity {
         setContentView(R.layout.activity_travellers_details);
 
         proceedToPayment = findViewById(R.id.proceedToPayment);
+        billingAddress = findViewById(R.id.billingAddressContainer);
 
         int arr = getIntent().getExtras().getInt("TC");
         int rem;
@@ -70,6 +73,14 @@ public class TravellersDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), Payment.class);
+                startActivity(i);
+            }
+        });
+
+        billingAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(TravellersDetails.this, BillingDetails.class);
                 startActivity(i);
             }
         });
