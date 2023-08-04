@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adanionerai.R;
@@ -39,7 +40,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.title.setText("Children "+(position+1));
 
-        holder.calendar.setOnClickListener(new View.OnClickListener() {
+        holder.calendarChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Calendar c = Calendar.getInstance();
@@ -74,6 +75,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView title, DOB;
+        ConstraintLayout calendarChoose;
         ImageView calendar;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +83,7 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyView
 
             calendar = itemView.findViewById(R.id.calenderImageDOBChildren);
             DOB = itemView.findViewById(R.id.childrenDOB);
+            calendarChoose = itemView.findViewById(R.id.ChildrenCalendar);
         }
     }
 }

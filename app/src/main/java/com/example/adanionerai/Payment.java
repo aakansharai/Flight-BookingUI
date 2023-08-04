@@ -1,5 +1,6 @@
 package com.example.adanionerai;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -25,10 +27,11 @@ import java.util.ArrayList;
 
 public class Payment extends AppCompatActivity {
 
-    TextView adaniRewardBalance, selectbank, viewOtherBank;
+    TextView adaniRewardBalance, selectbank, viewOtherBank, convinienceFee;
     ConstraintLayout adaniBalance, UPI, CreditDebit, NetBanking, Wallet, EMI, ticketDetail;
     ImageView dropDown1, dropUp1, dropDown2, dropUp2, dropDown3, dropUp3, dropDown4, dropUp4, dropDown5, dropUp5;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +42,14 @@ public class Payment extends AppCompatActivity {
         adaniBalance = findViewById(R.id.adaniRewardsCoinsContainer);
         selectbank = findViewById(R.id.selectBank);
         viewOtherBank = findViewById(R.id.viewOtherBank);
+        convinienceFee = findViewById(R.id.convinienceFee);
 
         UPI = findViewById(R.id.UPI_options);
         CreditDebit = findViewById(R.id.CreditDebit_options);
         NetBanking = findViewById(R.id.netBanking_options);
         Wallet = findViewById(R.id.wallet_options);
         EMI = findViewById(R.id.emi_options);
-        ticketDetail = findViewById(R.id.TicketWayDetail);
+        ticketDetail = findViewById(R.id.oneWayRoundTrip);
 
         dropDown1 = findViewById(R.id.dropDown);
         dropUp1 = findViewById(R.id.dropUp);
@@ -220,6 +224,11 @@ public class Payment extends AppCompatActivity {
                 selectBank(v);
             }
         });
+
+        convinienceFee.setTooltipText("\bConvenience Fee Info\b\n" +
+                "\n" +
+                "\n" +
+                "A non-refundable convenience fee for one way and roundtrip journey as per Domestic and International travel has been levied on all online payments. For payment in currencies other than INR, refer to the fare summary.");
 
     }
 
