@@ -385,7 +385,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/ContactTitle" />
 
                 <EditText
-                    android:id="@+id/FirstName"
+                    android:id="@+id/EmailId_TravellerDetails"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -410,13 +410,12 @@
                     android:textColorHint="@color/blackLight"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/FirstName">
+                    app:layout_constraintTop_toBottomOf="@+id/EmailId_TravellerDetails">
 
                     <com.hbb20.CountryCodePicker
                         android:id="@+id/country_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:ccp_autoDetectCountry="true"
                         app:ccp_defaultNameCode="IND"
                         app:ccp_showFlag="true"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -443,8 +442,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
                     android:drawablePadding="10dp"
-                    android:drawableStart="@drawable/whatsapp"
-                    android:text="Get Booking Details &amp; Updates on"
+                    android:drawableEnd="@drawable/whatsapp"
+                    android:text="Get Booking Details &amp; Updates on whatsApp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/Email" />
 
@@ -646,21 +645,21 @@
                     android:background="@color/grey"
                     app:layout_constraintTop_toBottomOf="@+id/totalAmount" />
 
-                <TextView
-                    android:id="@+id/coinDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/earn_coin_bg"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="15dp"
-                    android:text="Earn 99 Reward points on this transaction"
-                    android:textColor="@color/blackLight"
-                    android:textSize="16sp"
-                    app:drawableStartCompat="@drawable/coin_img"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view6" />
+<!--                <TextView-->
+<!--                    android:id="@+id/coinDescription"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:background="@drawable/earn_coin_bg"-->
+<!--                    android:paddingHorizontal="20dp"-->
+<!--                    android:paddingVertical="15dp"-->
+<!--                    android:text="Earn 99 Reward points on this transaction"-->
+<!--                    android:textColor="@color/blackLight"-->
+<!--                    android:textSize="16sp"-->
+<!--                    app:drawableStartCompat="@drawable/coin_img"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/view6" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
