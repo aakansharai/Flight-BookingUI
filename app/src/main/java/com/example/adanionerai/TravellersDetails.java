@@ -29,18 +29,12 @@ import java.util.Objects;
 
 public class TravellersDetails extends AppCompatActivity {
 
-    ArrayList<String> count = new ArrayList<>();
     Button proceedToPayment;
     EditText emailId;
     ConstraintLayout billingAddress;
     RecyclerView td;
-    int adultSet=1 ;
-    int childrenSet=0 ;
-    int infantSet=0 ;
-    int adultGet = 1 ;
-    int childrenGet = 0 ;
-    int infantGet = 0 ;
-//    @SuppressLint("MissingInflatedId")
+    JSONObject obj;
+    int adultSet=1, childrenSet=0, infantSet=0, adultGet = 1, childrenGet = 0, infantGet = 0;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +59,6 @@ public class TravellersDetails extends AppCompatActivity {
             arr=arr/10;
             i++;
         }
-        JSONObject obj;
 
         try {
             obj = new JSONObject(loadJSON());
