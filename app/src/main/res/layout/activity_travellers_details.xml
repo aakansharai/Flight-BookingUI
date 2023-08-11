@@ -74,262 +74,265 @@
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/detailsContainer"
+                android:id="@+id/listOfFlights"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/traveller_ticket_details_bg"
                 android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/listOfFlights"
+                    android:id="@+id/TicketWayDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/greyBackground"
-                    android:layout_marginTop="10dp"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/TicketWayDetail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <ImageView
-                            android:id="@+id/flagImg"
-                            android:layout_width="52dp"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="10dp"
-                            android:src="@drawable/flag"
-                            android:layout_marginTop="10dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Akasha Air"
-                            android:textColor="@color/blackLight"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/flagImg" />
-
-                        <TextView
-                            android:id="@+id/cityCodeDeparture"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:text="DEL"
-                            android:textAllCaps="true"
-                            android:textSize="18sp"
-                            app:layout_constraintStart_toEndOf="@+id/flagImg"
-                            app:layout_constraintTop_toTopOf="@+id/flagImg" />
-
-                        <TextView
-                            android:id="@+id/timeToDeparture"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="10:30"
-                            android:textColor="@color/blackLight"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/cityCodeDeparture"
-                            app:layout_constraintStart_toEndOf="@+id/cityCodeDeparture"
-                            app:layout_constraintTop_toTopOf="@+id/cityCodeDeparture" />
-
-                        <ImageView
-                            android:id="@+id/ArrowRight"
-                            android:layout_width="30dp"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="20dp"
-                            android:src="@drawable/arrowright"
-                            app:layout_constraintBottom_toBottomOf="@+id/timeToDeparture"
-                            app:layout_constraintStart_toEndOf="@+id/timeToDeparture"
-                            app:layout_constraintTop_toTopOf="@+id/timeToDeparture"
-                            app:tint="@color/blackLight" />
-
-                        <TextView
-                            android:id="@+id/cityCodeArrival"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            android:text="MOB"
-                            android:textAllCaps="true"
-                            android:textSize="18sp"
-                            app:layout_constraintEnd_toStartOf="@+id/timeToArrival"
-                            app:layout_constraintTop_toTopOf="@+id/ArrowRight" />
-
-                        <TextView
-                            android:id="@+id/timeToArrival"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="12:30"
-                            android:textColor="@color/blackLight"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/cityCodeArrival" />
-
-                        <TextView
-                            android:id="@+id/dateToDeparture"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Fri, 12 July '23"
-                            android:textColor="@color/blackLight"
-                            android:textSize="10sp"
-                            app:layout_constraintStart_toStartOf="@+id/cityCodeDeparture"
-                            app:layout_constraintTop_toBottomOf="@+id/cityCodeDeparture" />
-
-                        <TextView
-                            android:id="@+id/dateToArrival"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Fri, 12 July '23"
-                            android:textColor="@color/blackLight"
-                            android:textSize="10sp"
-                            app:layout_constraintEnd_toEndOf="@+id/timeToArrival"
-                            app:layout_constraintTop_toBottomOf="@+id/timeToArrival" />
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/RoundWay"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/flagImg"
+                        android:layout_width="52dp"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:src="@drawable/flag"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/TicketWayDetail">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <ImageView
-                            android:id="@+id/flagImgSecond"
-                            android:layout_width="52dp"
-                            android:layout_height="54dp"
-                            android:layout_marginStart="10dp"
-                            android:src="@drawable/flag"
-                            android:layout_marginTop="10dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Akasha Air"
+                        android:textColor="@color/blackLight"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/flagImg" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Akasha Air"
-                            android:textColor="@color/blackLight"
-                            android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/flagImgSecond" />
+                    <TextView
+                        android:id="@+id/cityCodeDeparture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="10dp"
+                        android:text="DEL"
+                        android:textAllCaps="true"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toEndOf="@+id/flagImg"
+                        app:layout_constraintTop_toTopOf="@+id/flagImg" />
 
-                        <TextView
-                            android:id="@+id/cityCodeDepartureRound"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:text="DEL"
-                            android:textAllCaps="true"
-                            android:textSize="18sp"
-                            app:layout_constraintStart_toEndOf="@+id/flagImgSecond"
-                            app:layout_constraintTop_toTopOf="@+id/flagImgSecond" />
+                    <TextView
+                        android:id="@+id/timeToDeparture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="10:30"
+                        android:textColor="@color/blackLight"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/cityCodeDeparture"
+                        app:layout_constraintStart_toEndOf="@+id/cityCodeDeparture"
+                        app:layout_constraintTop_toTopOf="@+id/cityCodeDeparture" />
 
-                        <TextView
-                            android:id="@+id/timeToDepartureRound"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="10:30"
-                            android:textColor="@color/blackLight"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/cityCodeDepartureRound"
-                            app:layout_constraintStart_toEndOf="@+id/cityCodeDepartureRound"
-                            app:layout_constraintTop_toTopOf="@+id/cityCodeDepartureRound" />
+                    <ImageView
+                        android:id="@+id/ArrowRight"
+                        android:layout_width="30dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/arrowright"
+                        app:layout_constraintBottom_toBottomOf="@+id/timeToDeparture"
+                        app:layout_constraintStart_toEndOf="@+id/timeToDeparture"
+                        app:layout_constraintTop_toTopOf="@+id/timeToDeparture"
+                        app:tint="@color/blackLight" />
 
-                        <ImageView
-                            android:id="@+id/ArrowRightRound"
-                            android:layout_width="30dp"
-                            android:layout_height="32dp"
-                            android:layout_marginStart="20dp"
-                            android:src="@drawable/arrowright"
-                            app:layout_constraintBottom_toBottomOf="@+id/timeToDepartureRound"
-                            app:layout_constraintStart_toEndOf="@+id/timeToDepartureRound"
-                            app:layout_constraintTop_toTopOf="@+id/timeToDepartureRound"
-                            app:tint="@color/blackLight" />
+                    <TextView
+                        android:id="@+id/cityCodeArrival"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="MOB"
+                        android:textAllCaps="true"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ArrowRight"
+                        app:layout_constraintStart_toEndOf="@+id/ArrowRight"
+                        app:layout_constraintTop_toTopOf="@+id/ArrowRight" />
 
-                        <TextView
-                            android:id="@+id/cityCodeArrivalRound"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:text="MOB"
-                            android:textAllCaps="true"
-                            android:textSize="18sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ArrowRightRound"
-                            app:layout_constraintStart_toEndOf="@+id/ArrowRightRound"
-                            app:layout_constraintTop_toTopOf="@+id/ArrowRightRound" />
+                    <TextView
+                        android:id="@+id/timeToArrival"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12:30"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/blackLight"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/cityCodeArrival"
+                        app:layout_constraintStart_toEndOf="@+id/cityCodeArrival"
+                        app:layout_constraintTop_toTopOf="@+id/cityCodeArrival" />
 
-                        <TextView
-                            android:id="@+id/timeToArrivalRound"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:text="12:30"
-                            android:textColor="@color/blackLight"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@+id/cityCodeArrivalRound"
-                            app:layout_constraintStart_toEndOf="@+id/cityCodeArrivalRound"
-                            app:layout_constraintTop_toTopOf="@+id/cityCodeArrivalRound" />
+                    <TextView
+                        android:id="@+id/dateToDeparture"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Fri, 12 July '23"
+                        android:textColor="@color/blackLight"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toStartOf="@+id/cityCodeDeparture"
+                        app:layout_constraintTop_toBottomOf="@+id/cityCodeDeparture" />
 
-                        <TextView
-                            android:id="@+id/dateToDepartureRound"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fri, 12 July '23"
-                            android:textColor="@color/blackLight"
-                            android:textSize="10sp"
-                            android:layout_marginTop="8dp"
-                            app:layout_constraintStart_toStartOf="@+id/cityCodeDepartureRound"
-                            app:layout_constraintTop_toBottomOf="@+id/cityCodeDepartureRound" />
-
-                        <TextView
-                            android:id="@+id/dateToArrivalRound"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fri, 12 July '23"
-                            android:textColor="@color/blackLight"
-                            android:textSize="10sp"
-                            android:layout_marginTop="8dp"
-                            app:layout_constraintEnd_toEndOf="@+id/timeToArrivalRound"
-                            app:layout_constraintTop_toBottomOf="@+id/cityCodeDepartureRound" />
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/dateToArrival"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Fri, 12 July '23"
+                        android:textColor="@color/blackLight"
+                        android:textSize="10sp"
+                        app:layout_constraintEnd_toEndOf="@+id/timeToArrival"
+                        app:layout_constraintTop_toBottomOf="@+id/timeToArrival" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/RoundWay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TicketWayDetail">
+
+                    <ImageView
+                        android:id="@+id/flagImgSecond"
+                        android:layout_width="52dp"
+                        android:layout_height="54dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/flag"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Akasha Air"
+                        android:textColor="@color/blackLight"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/flagImgSecond" />
+
+                    <TextView
+                        android:id="@+id/cityCodeDepartureRound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="10dp"
+                        android:text="DEL"
+                        android:textAllCaps="true"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toEndOf="@+id/flagImgSecond"
+                        app:layout_constraintTop_toTopOf="@+id/flagImgSecond" />
+
+                    <TextView
+                        android:id="@+id/timeToDepartureRound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="10:30"
+                        android:textColor="@color/blackLight"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/cityCodeDepartureRound"
+                        app:layout_constraintStart_toEndOf="@+id/cityCodeDepartureRound"
+                        app:layout_constraintTop_toTopOf="@+id/cityCodeDepartureRound" />
+
+                    <ImageView
+                        android:id="@+id/ArrowRightRound"
+                        android:layout_width="30dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/arrowright"
+                        app:layout_constraintBottom_toBottomOf="@+id/timeToDepartureRound"
+                        app:layout_constraintStart_toEndOf="@+id/timeToDepartureRound"
+                        app:layout_constraintTop_toTopOf="@+id/timeToDepartureRound"
+                        app:tint="@color/blackLight" />
+
+                    <TextView
+                        android:id="@+id/cityCodeArrivalRound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="MOB"
+                        android:textAllCaps="true"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ArrowRightRound"
+                        app:layout_constraintStart_toEndOf="@+id/ArrowRightRound"
+                        app:layout_constraintTop_toTopOf="@+id/ArrowRightRound" />
+
+                    <TextView
+                        android:id="@+id/timeToArrivalRound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="12:30"
+                        android:textColor="@color/blackLight"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/cityCodeArrivalRound"
+                        app:layout_constraintStart_toEndOf="@+id/cityCodeArrivalRound"
+                        app:layout_constraintTop_toTopOf="@+id/cityCodeArrivalRound" />
+
+                    <TextView
+                        android:id="@+id/dateToDepartureRound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Fri, 12 July '23"
+                        android:textColor="@color/blackLight"
+                        android:textSize="10sp"
+                        app:layout_constraintStart_toStartOf="@+id/cityCodeDepartureRound"
+                        app:layout_constraintTop_toBottomOf="@+id/cityCodeDepartureRound" />
+
+                    <TextView
+                        android:id="@+id/dateToArrivalRound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Fri, 12 July '23"
+                        android:textColor="@color/blackLight"
+                        android:textSize="10sp"
+                        app:layout_constraintEnd_toEndOf="@+id/timeToArrivalRound"
+                        app:layout_constraintTop_toBottomOf="@+id/cityCodeDepartureRound" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/detailsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:paddingVertical="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/listOfFlights">
 
                 <TextView
                     android:id="@+id/Text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:text="Enter names as mentioned on your passport or government approved IDs"
                     android:textColor="@color/blackLight"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/listOfFlights" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/listOfTravellers"
@@ -427,6 +430,8 @@
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
                         android:hint="Mobile number"
+                        android:inputType="phone"
+                        android:maxLength="15"
                         android:textAlignment="textStart"
                         android:textColor="@color/blackLight"
                         app:layout_constraintBottom_toBottomOf="parent"

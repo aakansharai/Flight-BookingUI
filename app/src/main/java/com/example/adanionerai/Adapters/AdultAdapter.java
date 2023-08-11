@@ -2,13 +2,17 @@ package com.example.adanionerai.Adapters;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.adanionerai.R;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class AdultAdapter extends RecyclerView.Adapter<AdultAdapter.MyViewHolder> {
 
@@ -49,19 +54,38 @@ public class AdultAdapter extends RecyclerView.Adapter<AdultAdapter.MyViewHolder
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                final Calendar mCalendar = Calendar.getInstance();
+
+                // Creating a simple calendar dialog.
+                // It was 9 Aug 2021 when this program was
+                // developed.
+                final DatePickerDialog mDialog = new DatePickerDialog(
                         view.getContext(), new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                // on below line we are setting date to our edit text.
-                                holder.DOB.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
-                            }
-                        },
-                        year, month, day);
-                datePickerDialog.show();
+                    int MaxYear, MaxMonth, MaxDate;
+                    @Override
+                    public void onDateSet(
+                        android.widget.DatePicker view, int mYear, int mMonth, int mDay) {
 
+                            mCalendar.set(Calendar.YEAR, MaxYear);
+                            mCalendar.set(Calendar.MONTH, MaxMonth);
+                            mCalendar.set(Calendar.DAY_OF_MONTH, MaxDate);
+                        }
+
+                },
+                mCalendar.get(Calendar.YEAR),
+                mCalendar.get(Calendar.MONTH),
+                mCalendar.get(Calendar.DAY_OF_MONTH));
+
+                Calendar minAdultAge = new GregorianCalendar();
+                minAdultAge.add(Calendar.YEAR, -18);
+                int MaxYear = minAdultAge.getWeekYear();
+                int MaxMonth = minAdultAge.getTime().getMonth();
+                int MaxDate = minAdultAge.getTime().getDate();
+                mCalendar.set(MaxYear, MaxMonth - 1, MaxDate);
+                mDialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());
+
+                mDialog.show();
             }
         });
 

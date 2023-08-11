@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/arrivalCityTitle">
 
         <TextView
-            android:id="@+id/country_code"
+            android:id="@+id/AddressLine1Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Address"
@@ -61,13 +61,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:hint="Mobile number"
+            android:hint="Address 1"
             android:textColorHint="@color/blackLight"
             android:textAlignment="textStart"
             android:textColor="@color/blackLight"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/country_code" />
+            app:layout_constraintTop_toBottomOf="@+id/AddressLine1Text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -88,18 +88,18 @@
             android:id="@+id/country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:ccp_autoDetectCountry="true"
             app:ccp_showArrow="false"
             app:ccp_showFlag="false"
+            app:ccp_defaultNameCode="IND"
             app:ccp_showFullName="true"
             app:ccp_showNameCode="false"
             app:ccp_showPhoneCode="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/CountryText" />
 
         <TextView
-            android:id="@+id/editText"
+            android:id="@+id/CountryText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -137,7 +137,7 @@
         app:layout_constraintTop_toTopOf="@+id/Country">
 
         <TextView
-            android:id="@+id/pin_code"
+            android:id="@+id/pin_codeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pin code"
@@ -152,13 +152,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:hint="Mobile number"
+            android:hint="Pin Code"
+            android:inputType="number"
             android:textColorHint="@color/blackLight"
             android:textAlignment="textStart"
             android:textColor="@color/blackLight"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pin_code" />
+            app:layout_constraintTop_toBottomOf="@+id/pin_codeText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -209,7 +210,6 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/background_circle_black"
         android:paddingHorizontal="15dp"
         android:paddingVertical="15dp"
@@ -217,7 +217,7 @@
         android:textColorHint="@color/blackLight"
         app:layout_constraintBottom_toBottomOf="@+id/StateContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Country">
+        app:layout_constraintTop_toTopOf="@+id/StateContainer">
 
         <TextView
             android:id="@+id/cityTitle"
@@ -246,6 +246,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
+        android:id="@+id/BillingDetails_AT_TravellersDetails_SubmitBTN"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
