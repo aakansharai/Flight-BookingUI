@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AdaniOneRai"
         tools:targetApi="31">
         <activity
-            android:name=".FlightBooking_page"
+            android:name=".FlightListRoundTrip"
             android:exported="false" />
         <activity
             android:name=".BillingDetails"
@@ -31,7 +31,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".FlightListRoundTrip"
+            android:name=".FlightBooking_page"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

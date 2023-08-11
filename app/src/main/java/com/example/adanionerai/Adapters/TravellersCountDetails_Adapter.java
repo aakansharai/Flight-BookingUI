@@ -51,7 +51,7 @@ public class TravellersCountDetails_Adapter extends RecyclerView.Adapter<Travell
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 1;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
