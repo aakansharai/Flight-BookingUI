@@ -58,7 +58,7 @@ public class TravellersDetails extends AppCompatActivity {
         assert jsonObject != null;
         adult = jsonObject.get("adult").getAsInt();
         children = jsonObject.get("children").getAsInt();
-        children = jsonObject.get("infant").getAsInt();
+        infant = jsonObject.get("infant").getAsInt();
 
         Log.e("JSON_OBJECT", jsonObject.toString());
         Log.e("TRAVELLERS", adult+" "+children+" "+infant);

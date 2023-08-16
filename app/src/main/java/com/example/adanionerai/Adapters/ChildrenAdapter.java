@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.adanionerai.R;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyViewHolder> {
 
@@ -43,24 +44,28 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyView
         holder.calendarChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Calendar c = Calendar.getInstance();
-
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
-                int day = c.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                final Calendar mCalendar = Calendar.getInstance();
+                final DatePickerDialog mDialog = new DatePickerDialog(
                         view.getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        // on below line we are setting date to our edit text.
-                        holder.DOB.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
+                    public void onDateSet(DatePicker view, int mYear, int mMonth, int mDay) {
+                        holder.DOB.setText(mDay + " - " + (mMonth + 1) + " - " + mYear);
                     }
+
                 },
-                        year, month, day);
-                datePickerDialog.show();
+                mCalendar.get(Calendar.YEAR),
+                mCalendar.get(Calendar.MONTH),
+                mCalendar.get(Calendar.DAY_OF_MONTH));
+
+                Calendar minAdultAge = new GregorianCalendar();
+                minAdultAge.add(Calendar.YEAR, -12);
+                int MaxYear = minAdultAge.getWeekYear();
+                int MaxMonth = minAdultAge.getTime().getMonth();
+                int MaxDate = minAdultAge.getTime().getDate();
+                mCalendar.set(MaxYear, MaxMonth - 1, MaxDate);
+                mDialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());
+
+                mDialog.show();
 
             }
         });
