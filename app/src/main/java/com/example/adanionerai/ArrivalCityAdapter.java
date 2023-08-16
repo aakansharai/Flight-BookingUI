@@ -54,7 +54,6 @@ public class ArrivalCityAdapter extends RecyclerView.Adapter<ArrivalCityAdapter.
             country = itemView.findViewById(R.id.country);
             airport = itemView.findViewById(R.id.Airport);
 
-
         }
     }
 }
