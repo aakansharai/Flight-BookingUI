@@ -34,6 +34,9 @@ import com.kizitonwose.calendar.view.MonthDayBinder;
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder;
 import com.kizitonwose.calendar.view.ViewContainer;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -46,6 +49,7 @@ public class FlightBooking_page extends AppCompatActivity {
     TextView returnTitle, returnDate, returnDay;
 
     FrameLayout fm;
+    JSONObject TravellerCountObject = new JSONObject();
 
     // CLASS & TRAVELLERS
     TextView classLevel, travellersNumberText, departureDate, departureDay;
@@ -212,12 +216,18 @@ public class FlightBooking_page extends AppCompatActivity {
         searchFlightBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(travCount==0){
-                    travCount=100;
+                if(TravellerCountObject.length()==0){
+                    try {
+                        TravellerCountObject.put("adult", 1);
+                        TravellerCountObject.put("children", 0);
+                        TravellerCountObject.put("infant", 0);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 Intent intent = new Intent(getApplicationContext(), TravellersDetails.class);
-                intent.putExtra("TC", travCount);
-                toast(""+travCount);
+                intent.putExtra("OBJECT", TravellerCountObject.toString());
+                log(TravellerCountObject.toString());
                 startActivity(intent);
             }
         });
@@ -849,7 +859,13 @@ public class FlightBooking_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                TravellerCount = AdultCount.getText().toString()+ChildrenCount.getText().toString()+InfantCount.getText().toString();
+                try {
+                    TravellerCountObject.put("adult", Integer.parseInt(AdultCount.getText().toString()));
+                    TravellerCountObject.put("children", Integer.parseInt(ChildrenCount.getText().toString()));
+                    TravellerCountObject.put("infant", Integer.parseInt(InfantCount.getText().toString()));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
 
 //                travellersDetailsLists.add(new TravellersDetailsList(AdultsCounts, childrenCounts, infantsCounts));
 //                AdultsCounts.add(Integer.parseInt(AdultCount.getText().toString()));

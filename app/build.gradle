@@ -44,6 +44,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
+//===============  G S O N  ====================
+    implementation 'com.google.code.gson:gson:2.10.1'
 //
 ////    Country picker dependency
 //    implementation 'com.hbb20:ccp:2.3.1'

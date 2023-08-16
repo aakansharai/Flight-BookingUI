@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.adanionerai.Adapters.TravellersCountDetails_Adapter;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +37,7 @@ public class TravellersDetails extends AppCompatActivity {
     ConstraintLayout billingAddress;
     RecyclerView td;
     JSONObject obj;
-    int adultSet=1, childrenSet=0, infantSet=0, adultGet = 1, childrenGet = 0, infantGet = 0;
+    int adult, children, infant;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,43 +48,25 @@ public class TravellersDetails extends AppCompatActivity {
         billingAddress = findViewById(R.id.billingAddressContainer);
         emailId = findViewById(R.id.EmailId_TravellerDetails);
 
-        int arr = getIntent().getExtras().getInt("TC");
-        int i=1;
-        while(arr>0)
-        {
-            if(i==1){
-                infantSet = arr%10;
-            } else if(i==2){
-                childrenSet = arr%10;
-            } else if(i==3){
-                adultSet = arr%10;
-            }
-            arr=arr/10;
-            i++;
-        }
+        String str = getIntent().getExtras().getString("OBJECT");
 
-        try {
-            obj = new JSONObject(loadJSON());
-            obj.getJSONObject("travellerCount").put("adult", adultSet);
-            obj.getJSONObject("travellerCount").put("child", childrenSet);
-            obj.getJSONObject("travellerCount").put("infant", infantSet);
-
-            adultGet = obj.getJSONObject("travellerCount").getInt("adult");
-            childrenGet = obj.getJSONObject("travellerCount").getInt("child");
-            infantGet = obj.getJSONObject("travellerCount").getInt("infant");
-            Log.e("TESTING", obj+"");
-        } catch (JSONException e) {
-            Log.e("TESTING", "GOT AN ERROR");
-            throw new RuntimeException(e);
-        }
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(str, new TypeToken<JsonObject>() {
+        }.getType());
 
 
-        Toast.makeText(this, arr+""+" "+adultSet+" "+childrenSet+" "+childrenSet, Toast.LENGTH_SHORT).show();
-        Log.e("LES_SEE"," "+adultSet+" "+childrenSet+" "+infantSet);
+        assert jsonObject != null;
+        adult = jsonObject.get("adult").getAsInt();
+        children = jsonObject.get("children").getAsInt();
+        children = jsonObject.get("infant").getAsInt();
+
+        Log.e("JSON_OBJECT", jsonObject.toString());
+        Log.e("TRAVELLERS", adult+" "+children+" "+infant);
+
         td = findViewById(R.id.listOfTravellers);
 
         td.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        TravellersCountDetails_Adapter travellersCountDetailsAdapter = new TravellersCountDetails_Adapter(adultSet, childrenSet, infantSet, TravellersDetails.this);
+        TravellersCountDetails_Adapter travellersCountDetailsAdapter = new TravellersCountDetails_Adapter(adult, children, infant, TravellersDetails.this);
 
         td.setAdapter(travellersCountDetailsAdapter);
 
