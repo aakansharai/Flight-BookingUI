@@ -15,7 +15,7 @@
         android:padding="5dp">
 
         <ImageView
-            android:id="@+id/vocher"
+            android:id="@+id/voucherImage"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginLeft="10dp"
@@ -24,7 +24,7 @@
 
 
         <TextView
-            android:id="@+id/earnrreward"
+            android:id="@+id/earnReward"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"

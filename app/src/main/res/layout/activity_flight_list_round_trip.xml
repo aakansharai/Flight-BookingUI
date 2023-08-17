@@ -50,7 +50,7 @@
             app:layout_constraintTop_toTopOf="@+id/backArrowIMG">
 
             <TextView
-                android:id="@+id/newdelhi"
+                android:id="@+id/Place1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Delhi"
@@ -59,7 +59,7 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/arrowimage2"
+                android:id="@+id/DoubleSideArrowImage2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -69,7 +69,7 @@
                 tools:ignore="InvalidId" />
 
             <TextView
-                android:id="@+id/varanshi"
+                android:id="@+id/Place2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -222,7 +222,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/OneFrom"
+                        android:id="@+id/OneCityCOdeFrom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DEL"
@@ -232,11 +232,11 @@
                         android:textSize="12sp"
                         android:layout_marginEnd="10dp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                        app:layout_constraintEnd_toStartOf="@+id/OneWay_ArrowImage"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/imageView3"
+                        android:id="@+id/OneWay_ArrowImage"
                         android:layout_width="20dp"
                         android:layout_height="15dp"
                         android:src="@drawable/arrowright"
@@ -245,7 +245,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/OneTo"
+                        android:id="@+id/OneCityCodeTo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="BOM"
@@ -255,9 +255,9 @@
                         android:textColorHint="@color/blackLight"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-                        app:layout_constraintStart_toEndOf="@+id/imageView3"
-                        app:layout_constraintTop_toTopOf="@+id/imageView3"
+                        app:layout_constraintBottom_toBottomOf="@+id/OneWay_ArrowImage"
+                        app:layout_constraintStart_toEndOf="@+id/OneWay_ArrowImage"
+                        app:layout_constraintTop_toTopOf="@+id/OneWay_ArrowImage"
                         app:layout_constraintVertical_bias="0.214" />
 
 
@@ -271,7 +271,7 @@
                         android:textColorHint="@color/blackLight"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/OneFrom" />
+                        app:layout_constraintTop_toBottomOf="@+id/OneCityCOdeFrom" />
 
                     <TextView
                         android:id="@+id/PriceOne"
@@ -283,7 +283,7 @@
                         android:textSize="12sp"
                         android:layout_marginTop="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/OneTo" />
+                        app:layout_constraintTop_toBottomOf="@+id/OneCityCOdeFrom" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -321,7 +321,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/RoundFrom"
+                        android:id="@+id/RoundCityCodeFrom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="BOM"
@@ -344,7 +344,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/RoundTo"
+                        android:id="@+id/RoundCityCodeTo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DEL"
@@ -370,7 +370,7 @@
                         android:textColorHint="@color/blackLight"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/RoundFrom" />
+                        app:layout_constraintTop_toBottomOf="@+id/RoundCityCodeFrom" />
 
                     <TextView
                         android:id="@+id/PriceRound"
@@ -382,7 +382,7 @@
                         android:textSize="12sp"
                         android:layout_marginTop="15dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/RoundTo" />
+                        app:layout_constraintTop_toBottomOf="@+id/RoundCityCodeTo" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

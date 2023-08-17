@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/arrivalCityTitle"
+        android:id="@+id/departureCityTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -54,10 +54,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/arrivalCityTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/departureCityTitle" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/popularCityAtDeparture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -76,7 +76,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/popularCityAtDeparture" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

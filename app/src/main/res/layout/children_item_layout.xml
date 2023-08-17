@@ -19,22 +19,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
-        android:id="@+id/radioGroup2"
+        android:id="@+id/ChildrenTitleRadioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-
         android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@+id/TravellerType"
         tools:layout_editor_absoluteX="15dp">
 
         <RadioButton
+            android:id="@+id/ChildrenMstr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/blackLight"
             android:text="Mstr." />
 
         <RadioButton
+            android:id="@+id/ChildrenMiss"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/blackLight"
@@ -56,7 +57,7 @@
         android:layout_marginTop="20dp"
         android:textColor="@color/blackLight"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup2" />
+        app:layout_constraintTop_toBottomOf="@+id/ChildrenTitleRadioGroup" />
 
     <EditText
         android:id="@+id/LastName"
