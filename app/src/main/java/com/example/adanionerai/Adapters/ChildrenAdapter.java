@@ -3,6 +3,7 @@ package com.example.adanionerai.Adapters;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,12 +59,15 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyView
                 mCalendar.get(Calendar.DAY_OF_MONTH));
 
                 Calendar minAdultAge = new GregorianCalendar();
-                minAdultAge.add(Calendar.YEAR, -12);
+                minAdultAge.add(Calendar.YEAR, -2);
                 int MaxYear = minAdultAge.getWeekYear();
                 int MaxMonth = minAdultAge.getTime().getMonth();
                 int MaxDate = minAdultAge.getTime().getDate();
+                Log.e("ERROR", MaxYear+" "+MaxMonth+" "+MaxDate);
                 mCalendar.set(MaxYear, MaxMonth - 1, MaxDate);
+
                 mDialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());
+//                mDialog.getDatePicker().setMinDate(Calendar.YEAR - 12);
 
                 mDialog.show();
 

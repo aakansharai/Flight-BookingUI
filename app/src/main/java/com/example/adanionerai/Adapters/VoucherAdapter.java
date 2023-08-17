@@ -53,8 +53,8 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.MyViewHo
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageView= itemView.findViewById(R.id.vocher);
-            textView = itemView.findViewById(R.id.earnrreward);
+            imageView= itemView.findViewById(R.id.voucherImage);
+            textView = itemView.findViewById(R.id.earnReward);
         }
     }
 }

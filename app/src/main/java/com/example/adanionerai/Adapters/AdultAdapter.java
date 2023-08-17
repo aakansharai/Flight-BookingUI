@@ -62,7 +62,7 @@ public class AdultAdapter extends RecyclerView.Adapter<AdultAdapter.MyViewHolder
                 mCalendar.get(Calendar.DAY_OF_MONTH));
 
                 Calendar minAdultAge = new GregorianCalendar();
-                minAdultAge.add(Calendar.YEAR, -18);
+                minAdultAge.add(Calendar.YEAR, -21);
                 int MaxYear = minAdultAge.getWeekYear();
                 int MaxMonth = minAdultAge.getTime().getMonth();
                 int MaxDate = minAdultAge.getTime().getDate();

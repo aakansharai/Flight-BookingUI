@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/cityTitle"
+        android:id="@+id/DateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -38,44 +38,6 @@
         app:layout_constraintStart_toStartOf="@+id/closeDialog"
         app:layout_constraintTop_toBottomOf="@+id/closeDialog" />
 
-    <LinearLayout
-        android:id="@+id/buttonContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        app:layout_constraintTop_toBottomOf="@+id/cityTitle">
-
-        <Button
-            android:id="@+id/departureBTN"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="Departure"
-            android:textAllCaps="false" />
-
-        <Button
-            android:id="@+id/arrivalBTN"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="Arrival"
-            android:textAllCaps="false" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/viewDIV1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#32201F1F"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonContainer" />
 
 
     <LinearLayout
@@ -83,10 +45,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:paddingVertical="10dp"
-        android:weightSum="6"
-        app:layout_constraintTop_toBottomOf="@+id/viewDIV1">
+        android:weightSum="7"
+        app:layout_constraintTop_toBottomOf="@+id/DateTitle">
 
         <TextView
             android:layout_width="0dp"
@@ -110,6 +72,14 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Tue"
+            android:textColor="@color/blackLight" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Wed"
             android:textColor="@color/blackLight" />
 
         <TextView

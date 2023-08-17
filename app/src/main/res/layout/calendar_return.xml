@@ -37,33 +37,6 @@
         app:layout_constraintStart_toStartOf="@+id/closeDialog"
         app:layout_constraintTop_toBottomOf="@+id/closeDialog" />
 
-    <LinearLayout
-        android:id="@+id/buttonContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:weightSum="2"
-        app:layout_constraintTop_toBottomOf="@+id/arrivalCityTitle">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="Departure"
-            android:textAllCaps="false" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="Arrival"
-            android:textAllCaps="false" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -71,8 +44,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingVertical="10dp"
+        android:layout_marginTop="20dp"
         android:weightSum="6"
-        app:layout_constraintTop_toBottomOf="@+id/buttonContainer">
+        app:layout_constraintTop_toBottomOf="@+id/arrivalCityTitle">
 
         <TextView
             android:layout_width="0dp"
