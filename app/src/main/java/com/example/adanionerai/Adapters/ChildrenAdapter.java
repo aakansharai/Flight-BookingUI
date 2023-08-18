@@ -58,16 +58,22 @@ public class ChildrenAdapter extends RecyclerView.Adapter<ChildrenAdapter.MyView
                 mCalendar.get(Calendar.MONTH),
                 mCalendar.get(Calendar.DAY_OF_MONTH));
 
-                Calendar minAdultAge = new GregorianCalendar();
-                minAdultAge.add(Calendar.YEAR, -2);
-                int MaxYear = minAdultAge.getWeekYear();
-                int MaxMonth = minAdultAge.getTime().getMonth();
-                int MaxDate = minAdultAge.getTime().getDate();
-                Log.e("ERROR", MaxYear+" "+MaxMonth+" "+MaxDate);
-                mCalendar.set(MaxYear, MaxMonth - 1, MaxDate);
+                Calendar cal = Calendar.getInstance();
+                Log.e("CALENDAR DATE", cal.getTime().getDate()+" "+cal.getTime().getMonth()+" "+(cal.getWeekYear()-12));
+                Log.e("CALENDAR DATE", cal.getTime().getDate()+" "+cal.getTime().getMonth()+" "+(cal.getWeekYear()-2));
 
+                final int minDay = cal.getTime().getDate();
+                final int minMonth = cal.getTime().getMonth();
+                final int minYear = cal.getWeekYear()-12;
+                mCalendar.set(minYear, minMonth, minDay);
+                mDialog.getDatePicker().setMinDate(mCalendar.getTimeInMillis());
+
+
+                final int maxDay = cal.getTime().getDate();
+                final int maxMonth = cal.getTime().getMonth();
+                final int maxYear = cal.getWeekYear()-2;
+                mCalendar.set(maxYear, maxMonth, maxDay);
                 mDialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());
-//                mDialog.getDatePicker().setMinDate(Calendar.YEAR - 12);
 
                 mDialog.show();
 

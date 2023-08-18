@@ -37,6 +37,7 @@ import com.kizitonwose.calendar.view.ViewContainer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -45,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.SimpleFormatter;
 
 public class FlightBooking_page extends AppCompatActivity {
 
@@ -52,8 +54,8 @@ public class FlightBooking_page extends AppCompatActivity {
     TextView returnTitle, returnDate, returnDay;
 
     FrameLayout fm;
-    LocalDate datesToShow = LocalDate.now();
-    LocalDate dateInDeparture ;
+    LocalDate datesDeparture = LocalDate.now();
+    LocalDate dateInArrival ;
     JSONObject TravellerCountObject = new JSONObject();
     String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
     String weekName[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
@@ -63,16 +65,12 @@ public class FlightBooking_page extends AppCompatActivity {
     TextView classLevel, travellersNumberText, departureDate, departureDay;
 
     RadioButton oneWay, roundTrip;
+    RadioGroup tripTypeRadioGroup;
     RecyclerView arrivalCity;
     Button searchFlightBTN;
     String TravellerCount;
     int travCount;
     ConstraintLayout TC, DepartureDate, returnTripDateContainer;
-//    ArrayList<Integer> AdultsCounts = null;
-//    ArrayList<Integer> childrenCounts = null;
-//    ArrayList<Integer> infantsCounts = null;
-    ArrayList<String> COUNT = new ArrayList<>();
-    ArrayList<TravellersDetailsList> travellersDetailsLists = new ArrayList<TravellersDetailsList>();
     ArrayList<city> cities = new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
@@ -99,15 +97,21 @@ public class FlightBooking_page extends AppCompatActivity {
         returnDay = findViewById(R.id.returnDay);
 
         oneWay = findViewById(R.id.TicketWayDetail);
+
         returnTripDateContainer = findViewById(R.id.returnDateContainer);
+        returnTitle = findViewById(R.id.textAddReturn);
+        departureDate = findViewById(R.id.DepartureDate);
+
         roundTrip = findViewById(R.id.roundWay);
         arrivalCity = findViewById(R.id.arrivalCityList);
         String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
 
-        departureDay.setText(weekName[datesToShow.getDayOfWeek().getValue()]+", ");
-        departureDate.setText(datesToShow.getDayOfMonth()+" "+monthName[datesToShow.getMonthValue()-1]+" '"+datesToShow.getYear()%2000);
+        departureDay.setText(weekName[datesDeparture.getDayOfWeek().getValue()]+", ");
+        departureDate.setText(datesDeparture.getDayOfMonth()+" "+monthName[datesDeparture.getMonthValue()-1]+" '"+datesDeparture.getYear()%2000);
 
+
+//=========    D E P A R T U R E    C I T Y   -   S E L E C T ==========================
 
         oneWay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -126,7 +130,7 @@ public class FlightBooking_page extends AppCompatActivity {
             }
         });
 
-        //    DEPARTURE CITY ----- SELECT
+//=========    D E P A R T U R E    C I T Y   -   S E L E C T ==========================
         firstCityCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,26 +177,27 @@ public class FlightBooking_page extends AppCompatActivity {
         });
 
 
+//=========    D E P A R T U R E    D A T E   -   S E L E C T ==========================
 
-        returnTitle = findViewById(R.id.textAddReturn);
-        departureDate = findViewById(R.id.DepartureDate);
-//        returnDate = findViewById(R.id.returnDate);
-//        returnDay = findViewById(R.id.returnDay);
-
-        LocalDate arrivalDateUpdating, departureDateUpdating ;
-
-        // DEPARTURE DATE ------ SELECTION
+        departureDay = findViewById(R.id.DepartureDay);
         DepartureDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                View v = View.inflate(FlightBooking_page.this, R.layout.calendar, null);
+                if(oneWay.isChecked()) {
+                    View v = View.inflate(FlightBooking_page.this, R.layout.calendar, null);
+                    calendarDeparture(v, departureDate, departureDay);
+                }
+                else {
+                    View v = View.inflate(FlightBooking_page.this, R.layout.calendar, null);
+                    selectCurrentView[1] = calendarArrival(v, returnDate, returnDay, departureDate, departureDay);
 
-                departureDay = findViewById(R.id.DepartureDay);
-                calendarDeparture(v, departureDate, departureDay);
+                }
+
             }
         });
 
-        // ARRIVAL DATE ------ SELECTION
+//=========    A R R I V A L    D A T E   -   S E L E C T ==========================
+
         returnTripDateContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -262,8 +267,8 @@ public class FlightBooking_page extends AppCompatActivity {
         TextView title = dialog.findViewById(R.id.DateTitle);
 
         title.setText("Select Departure city");
+        final int[] count = {0};
 
-        LocalDate selectedDate;
         CalendarView calendarView;
 
         dialog.show();
@@ -274,7 +279,12 @@ public class FlightBooking_page extends AppCompatActivity {
         String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
         calendarView = dialog.findViewById(R.id.calenderView);
-        selectedDate = LocalDate.now();
+        LocalDate selectedDate = LocalDate.now();
+        LocalDate selectedDateDeparture = datesDeparture;
+
+//        Log.e("DEPARTURE_VALA_ DATA", datesDeparture+"");
+//        Log.wtf("DEPARTURE DIALOG", "DEPARTURE DIALOG ENTERED ----------------");
+
 
         YearMonth currentMonth = YearMonth.from(LocalDate.now());
         YearMonth startMonth = currentMonth.minusMonths(0);
@@ -307,14 +317,18 @@ public class FlightBooking_page extends AppCompatActivity {
 
                 if(calendarDay.getPosition() == DayPosition.MonthDate){
                     container.textView.setVisibility(View.VISIBLE);
-                    if(calendarDay.getDate().isEqual(selectedDate)){
+
+                    if(calendarDay.getDate().isEqual(selectedDateDeparture)){
+                        Log.e("BIND-ARRIVAL_DATE_ONE", "DATE ONE ");
+
                         selectedToday = container;
                         DateEnable(selectedToday);
-                    } else if(calendarDay.getDate().isBefore(selectedDate)){
+                        Log.e("DateEnabled number 1", selectedToday+"");
+                    } else if(calendarDay.getDate().isBefore(selectedDate)) {
                         container.textView.setTextColor(Color.LTGRAY);
                         container.textView.setEnabled(false);
                     }
-                    else{
+                    else {
                         container.textView.setTextColor(Color.BLACK);
                         container.textView.setBackground(null);
                     }
@@ -322,25 +336,23 @@ public class FlightBooking_page extends AppCompatActivity {
                     container.textView.setVisibility(View.INVISIBLE);
                 }
 
-
                 container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        count[0] = 1;
                         selectedToday.textView.setTextColor(Color.BLACK);
                         selectedToday.textView.setBackground(null);
 
                         int date = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("dd")));
                         int month = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("MM")));
-                        int year = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("yy")));
+                        int year = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("yyyy")));
                         weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
                         DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
-                        datesToShow = LocalDate.of(date, month, year);
-                        Log.e("RETURN DATE ", datesToShow+"\n"+date+" "+month+" "+year+" \n");
-                        LocalDate dateInReturn = datesToShow.plusDays(0001);
-                        Log.e("RETURN DATE ", dateInReturn+" ");
 
-//                        returnDate.setText(dateInReturn.getDayOfMonth()+" "+monthName[dateInReturn.getMonth().getValue()-1]+" '"+dateInReturn.getDayOfYear()%2000);
-//                        returnDay.setText(weekName[dateInReturn.getDayOfWeek().getValue()]+", ");
+                        datesDeparture = LocalDate.of(year, month, date);
+                        dateInArrival = datesDeparture.plusDays(1);
+                        returnDay.setText(weekName[dateInArrival.getDayOfWeek().getValue()-1]+", ");
+                        returnDate.setText(dateInArrival.getDayOfMonth()+" "+monthName[dateInArrival.getMonthValue()-1]+" '"+dateInArrival.getYear()%2000);
 
                         selectedToday = container;
                         selectedToday.textView.setBackgroundResource(R.drawable.background_test);
@@ -370,11 +382,19 @@ public class FlightBooking_page extends AppCompatActivity {
         });
 
         doneCalendar.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                toast("DONE");
-                Day.setText(weekDayOfMonth[0]);
-                Date.setText(DateOfMonth[0]);
+                if(count[0] == 0){
+                    log("MISSION P", count[0]+"");
+                    Day.setText(weekName[datesDeparture.getDayOfWeek().getValue()]+", ");
+                    Date.setText(datesDeparture.getDayOfMonth()+" "+monthName[datesDeparture.getMonthValue()-1]+" '"+datesDeparture.getYear());
+                } else{
+                    log("MISSION F", count[0]+"");
+                    Day.setText(weekDayOfMonth[0]);
+                    Date.setText(DateOfMonth[0]);
+                }
+
                 dialog.cancel();
             }
         });
@@ -387,10 +407,6 @@ public class FlightBooking_page extends AppCompatActivity {
 
     }
 
-    private void DateEnable(DayViewContainer container) {
-        container.textView.setBackgroundResource(R.drawable.background_test);
-        container.textView.setTextColor(Color.WHITE);
-    }
 
     private DayViewContainer calendarArrival(View v, TextView Date, TextView Day, TextView DepartureDate, TextView DepartureDay) {
 
@@ -412,14 +428,15 @@ public class FlightBooking_page extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
 
 
-        LocalDate selectedDate;
-        CalendarView calendarView;
+//        LocalDate selectedDate = datesToShow.plusDays(1);
+        CalendarView calendarView ;
+        LocalDate arrDateInArrCalendar ;
 
         String week[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
         calendarView = dialog.findViewById(R.id.calenderView);
-        selectedDate = LocalDate.now();
+//        selectedDate = LocalDate.now();
 
 
         YearMonth currentMonth = YearMonth.from(LocalDate.now());
@@ -430,6 +447,7 @@ public class FlightBooking_page extends AppCompatActivity {
         Log.e("CURR-MONTH", ""+currentMonth);
         Log.e("START-MONTH",""+startMonth);
         Log.e("END-MONTH",""+endMonth);
+        Log.wtf("ARRIVAL DIALOG", "ARRIVAL DIALOG ENTERED ----------------");
 
         calendarView.setup(startMonth, endMonth, getFirstDayOfWeekFromLocal());
         calendarView.scrollToMonth(currentMonth);
@@ -440,7 +458,15 @@ public class FlightBooking_page extends AppCompatActivity {
         final String[] weekDayOfMonth = new String[2];
         final String[] DateOfMonth= new String[2];
         final DayViewContainer[] selectCurrentView = new DayViewContainer[2];
+        List<DayViewContainer> listOfDates = new ArrayList<>();
 //        final LocalDate[] selectCurrentView = new LocalDate[2];
+
+        LocalDate selectedDateArrivalDate = LocalDate.now();
+        LocalDate selectedDate = datesDeparture;
+        Log.wtf("DATE DEPARTURE", datesDeparture+"");
+        LocalDate selectedDepartureDate = datesDeparture.plusDays(1);
+
+        final int[] count = {0, 0};
 
         calendarView.setDayBinder(new MonthDayBinder<DayViewContainer>() {
 
@@ -452,57 +478,51 @@ public class FlightBooking_page extends AppCompatActivity {
 
             @Override
             public void bind(@NonNull DayViewContainer container, CalendarDay calendarDay) {
-
                 container.textView.setText(String.valueOf(calendarDay.getDate().getDayOfMonth()));
 
-                log("SELECTED DATA" ,String.valueOf(selectedDate));
-
-//                if(calendarDay.getPosition() == DayPosition.MonthDate){
-//                    container.textView.setVisibility(View.VISIBLE);
-//                    if(calendarDay.getDate().isEqual(selectedDate)){
-//                        selectCurrentView[0] = container;
-//                        selectCurrentView[1] = container;
-//                        DateEnable(selectCurrentView[0]);
-//                    } else if(calendarDay.getDate().isBefore(selectedDate)){
-//                        container.textView.setTextColor(Color.LTGRAY);
-//                        container.textView.setEnabled(false);
-//                    }
-//                    else{
-//                        container.textView.setTextColor(Color.BLACK);
-//                        container.textView.setBackground(null);
-//                    }
-//                } else{
-//                    container.textView.setVisibility(View.INVISIBLE);
-//                }
-
                 if(calendarDay.getPosition() == DayPosition.MonthDate) {
-//                    Log.e("RULE@", DayPosition.MonthDate+"");
-//                    Log.e("RULE@2", calendarDay.getPosition()+"");
                     container.textView.setVisibility(View.VISIBLE);
                     if(calendarDay.getDate().isEqual(selectedDate) && selectCurrentView[1]==null){
-
+                        count[0] = 1;
                         selectCurrentView[0] = container;
-                        selectCurrentView[1] = container;
                         DateEnable(selectCurrentView[0]);
-                    } else if(calendarDay.getDate().isBefore(selectedDate)) {
+                    } else if(selectCurrentView[0]!=null && count[0] == 1){
+                        selectCurrentView[1] = container;
+                        DateEnable(selectCurrentView[1]);
+                        count[0] = 2;
+                    } else if(calendarDay.getDate().isBefore(selectedDateArrivalDate)) {
                         container.textView.setTextColor(Color.LTGRAY);
                         container.textView.setEnabled(false);
                     } else {
-                        DateEnable(selectCurrentView[1]);
+//                        Log.e("DateEnabled number 4", selectCurrentView[1]+"");
+//                        DateEnable(selectCurrentView[1]);
                         container.textView.setTextColor(Color.BLACK);
                         container.textView.setBackground(null);
+//                        container.textView.setBackgroundColor(Color.LTGRAY);
                     }
                 } else {
                     container.textView.setVisibility(View.INVISIBLE);
                 }
 
+                count[1] = 0;
 
                 container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        int turnToDate = 1;
+                        if(turnToDate==1){
+
+
+
+                            turnToDate = 2;
+                        } else {
+
+                        }
+                        count[1] = 1;
                         selectCurrentView[1].textView.setTextColor(Color.BLACK);
                         selectCurrentView[1].textView.setBackground(null);
                         if(selectCurrentView[0]!=null){
+                            Log.e("DateEnabled number 5", selectCurrentView[0]+"");
                             DateEnable(selectCurrentView[0]);
                             Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
                         }
@@ -511,19 +531,20 @@ public class FlightBooking_page extends AppCompatActivity {
 
                         int date = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("dd")));
                         int month = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("MM")));
-                        int year = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("yy")));
+                        int year = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("yyyy")));
                         weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
                         DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
 
+                        dateInArrival = LocalDate.of(year, month, date);
                         selectCurrentView[1] = container;
                         selectCurrentView[1].textView.setBackgroundResource(R.drawable.background_test);
                         selectCurrentView[1].textView.setTextColor(Color.WHITE);
                         Log.e("SELECTED_DATE", selectCurrentView[1].textView.getText()+"");
                     }
+
                 });
 
-
-//                DateEnable(selectCurrentView);
+                listOfDates.add(new DayViewContainer(container.textView));
             }
         });
 //        log(selectCurrentView[0]+"");
@@ -546,15 +567,21 @@ public class FlightBooking_page extends AppCompatActivity {
             }
         });
 
+//        SimpleDateFormat formatter = new SimpleDateFormat("YY, dd MMM 'yy");
+
         doneCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toast("DONE");
-//                DepartureDay.setText(weekDayOfMonth[0]);
-//                DepartureDate.setText(DateOfMonth[0]);
-
-                Day.setText(weekDayOfMonth[0]);
-                Date.setText(DateOfMonth[0]);
+                if(count[1]==0){
+                    log("HELLO", "MISSION PASSED");
+                    Day.setText(week[selectedDepartureDate.getDayOfWeek().getValue()]+", ");
+                    Date.setText(selectedDepartureDate.getDayOfMonth()+" "+monthName[selectedDepartureDate.getMonthValue()-1]+" "+selectedDepartureDate.getYear());
+//                    formatter.format(datesToShow.getDayOfMonth());
+                } else{
+                    log("FAILED", "MISSION FAILED");
+                    Day.setText(weekDayOfMonth[0]);
+                    Date.setText(DateOfMonth[0]);}
 
                 dialog.cancel();
             }
@@ -609,6 +636,7 @@ public class FlightBooking_page extends AppCompatActivity {
                     container.textView.setVisibility(View.VISIBLE);
                     if(calendarDay.getDate().isEqual(selectedDate)){
                         selectedToday = container;
+                        Log.e("DateEnabled number 6", selectedToday+"");
                         DateEnable(selectedToday);
                     } else if(calendarDay.getDate().isBefore(selectedDate)){
                         container.textView.setTextColor(Color.LTGRAY);
@@ -679,9 +707,9 @@ public class FlightBooking_page extends AppCompatActivity {
         returnTripDateContainer = findViewById(R.id.returnDateContainer);
         roundTrip.setChecked(true);
         returnTripDateContainer.setVisibility(View.VISIBLE);
-        LocalDate returnDateToShow = datesToShow.plusDays(1);
+        LocalDate returnDateToShow = datesDeparture.plusDays(1);
         returnDay.setText(weekName[returnDateToShow.getDayOfWeek().getValue()]+", ");
-        returnDate.setText(returnDateToShow.getDayOfMonth()+1+" "+monthName[returnDateToShow.getMonthValue()-1]+" '"+returnDateToShow.getYear()%2000);
+        returnDate.setText(returnDateToShow.getDayOfMonth()+" "+monthName[returnDateToShow.getMonthValue()-1]+" '"+returnDateToShow.getYear()%2000);
         returnTitle.setVisibility(View.GONE);
     }
 
@@ -887,11 +915,6 @@ public class FlightBooking_page extends AppCompatActivity {
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-
-//                travellersDetailsLists.add(new TravellersDetailsList(AdultsCounts, childrenCounts, infantsCounts));
-//                AdultsCounts.add(Integer.parseInt(AdultCount.getText().toString()));
-//                childrenCounts.add((Integer.parseInt(ChildrenCount.getText().toString())));
-//                infantsCounts.add((Integer.parseInt(InfantCount.getText().toString())));
                 travCount = ((Integer.parseInt(AdultCount.getText().toString()))*100)+((Integer.parseInt(ChildrenCount.getText().toString()))*10)+(Integer.parseInt(InfantCount.getText().toString()));
                 int travellers = (Integer.parseInt(AdultCount.getText().toString()))+(Integer.parseInt(ChildrenCount.getText().toString()))+(Integer.parseInt(InfantCount.getText().toString()));
                 travellers(travellers);
@@ -934,6 +957,11 @@ public class FlightBooking_page extends AppCompatActivity {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
+    private void DateEnable(DayViewContainer container) {
+//        container.textView = findViewById(R.id.)
+        container.textView.setBackgroundResource(R.drawable.background_test);
+        container.textView.setTextColor(Color.WHITE);
+    }
 
     /////////////<<<<<<<<<<<<<<-------- FOR CALENDAR ---------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     private void log(String tag, String s) {
@@ -943,10 +971,6 @@ public class FlightBooking_page extends AppCompatActivity {
     private DayOfWeek getFirstDayOfWeekFromLocal() {
         return DayOfWeek.SUNDAY;
     }
-//    private DayOfWeek[] daysOfWeek = new DayOfWeek[]{
-//            DayOfWeek.SUNDAY, DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY,
-//            DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY
-//    };
 
     static class MonthViewContainer extends ViewContainer {
         TextView titlesMonthContainer;
