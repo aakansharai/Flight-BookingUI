@@ -70,6 +70,8 @@ public class FlightBooking_page extends AppCompatActivity {
     Button searchFlightBTN;
     String TravellerCount;
     int travCount;
+    int turnToDate = 1;
+
     ConstraintLayout TC, DepartureDate, returnTripDateContainer;
     ArrayList<city> cities = new ArrayList<>();
 
@@ -339,7 +341,6 @@ public class FlightBooking_page extends AppCompatActivity {
                 container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        count[0] = 1;
                         selectedToday.textView.setTextColor(Color.BLACK);
                         selectedToday.textView.setBackground(null);
 
@@ -359,7 +360,6 @@ public class FlightBooking_page extends AppCompatActivity {
                         selectedToday.textView.setTextColor(Color.WHITE);
                     }
                 });
-//                DateEnable(selectCurrentView);
             }
         });
 
@@ -377,7 +377,6 @@ public class FlightBooking_page extends AppCompatActivity {
                 String[] monthName = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
                 container.titlesMonthContainer.setText(monthName[(month-1)%12]+" "+year);
-
             }
         });
 
@@ -385,15 +384,8 @@ public class FlightBooking_page extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                if(count[0] == 0){
-                    log("MISSION P", count[0]+"");
-                    Day.setText(weekName[datesDeparture.getDayOfWeek().getValue()]+", ");
-                    Date.setText(datesDeparture.getDayOfMonth()+" "+monthName[datesDeparture.getMonthValue()-1]+" '"+datesDeparture.getYear());
-                } else{
-                    log("MISSION F", count[0]+"");
-                    Day.setText(weekDayOfMonth[0]);
-                    Date.setText(DateOfMonth[0]);
-                }
+                Day.setText(weekName[datesDeparture.getDayOfWeek().getValue()]+", ");
+                Date.setText(datesDeparture.getDayOfMonth()+" "+monthName[datesDeparture.getMonthValue()-1]+" '"+datesDeparture.getYear());
 
                 dialog.cancel();
             }
@@ -430,7 +422,6 @@ public class FlightBooking_page extends AppCompatActivity {
 
 //        LocalDate selectedDate = datesToShow.plusDays(1);
         CalendarView calendarView ;
-        LocalDate arrDateInArrCalendar ;
 
         String week[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
@@ -463,10 +454,12 @@ public class FlightBooking_page extends AppCompatActivity {
 
         LocalDate selectedDateArrivalDate = LocalDate.now();
         LocalDate selectedDate = datesDeparture;
+        LocalDate arrDateInArrCalendar = dateInArrival;
         Log.wtf("DATE DEPARTURE", datesDeparture+"");
         LocalDate selectedDepartureDate = datesDeparture.plusDays(1);
 
         final int[] count = {0, 0};
+        turnToDate = 1;
 
         calendarView.setDayBinder(new MonthDayBinder<DayViewContainer>() {
 
@@ -482,20 +475,21 @@ public class FlightBooking_page extends AppCompatActivity {
 
                 if(calendarDay.getPosition() == DayPosition.MonthDate) {
                     container.textView.setVisibility(View.VISIBLE);
-                    if(calendarDay.getDate().isEqual(selectedDate) && selectCurrentView[1]==null){
+                    if(calendarDay.getDate().isEqual(selectedDate) && selectCurrentView[1]==null) {
                         count[0] = 1;
                         selectCurrentView[0] = container;
                         DateEnable(selectCurrentView[0]);
-                    } else if(selectCurrentView[0]!=null && count[0] == 1){
+                    } else if(selectCurrentView[0]!=null && count[0] == 1 && calendarDay.getDate().isEqual(arrDateInArrCalendar)){
                         selectCurrentView[1] = container;
                         DateEnable(selectCurrentView[1]);
                         count[0] = 2;
-                    } else if(calendarDay.getDate().isBefore(selectedDateArrivalDate)) {
+                    } else if(calendarDay.getDate().isAfter(datesDeparture) && calendarDay.getDate().isBefore(dateInArrival)){
+                        container.textView.setTextColor(Color.BLACK);
+                        container.textView.setBackgroundColor(Color.LTGRAY);
+                    }else if(calendarDay.getDate().isBefore(selectedDateArrivalDate)) {
                         container.textView.setTextColor(Color.LTGRAY);
                         container.textView.setEnabled(false);
                     } else {
-//                        Log.e("DateEnabled number 4", selectCurrentView[1]+"");
-//                        DateEnable(selectCurrentView[1]);
                         container.textView.setTextColor(Color.BLACK);
                         container.textView.setBackground(null);
 //                        container.textView.setBackgroundColor(Color.LTGRAY);
@@ -509,37 +503,67 @@ public class FlightBooking_page extends AppCompatActivity {
                 container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        int turnToDate = 1;
-                        if(turnToDate==1){
-
-
-
-                            turnToDate = 2;
-                        } else {
-
-                        }
-                        count[1] = 1;
-                        selectCurrentView[1].textView.setTextColor(Color.BLACK);
-                        selectCurrentView[1].textView.setBackground(null);
-                        if(selectCurrentView[0]!=null){
-                            Log.e("DateEnabled number 5", selectCurrentView[0]+"");
-                            DateEnable(selectCurrentView[0]);
-                            Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
-                        }
-
-                        Log.e("DESELECTED_DATE", selectCurrentView[1].textView.getText()+"");
-
+//                        turnToDate = 1 ---> For Arrival Date selection
+//                        turnToDate = 2 ---> For Departure Date selection
                         int date = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("dd")));
                         int month = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("MM")));
                         int year = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("yyyy")));
-                        weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
-                        DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
+                        LocalDate tempDate = LocalDate.of(year, month, date);
+                        if(turnToDate==1){
+                            if(tempDate.isAfter(datesDeparture)){
+                                dateInArrival = LocalDate.of(year, month, date);
 
-                        dateInArrival = LocalDate.of(year, month, date);
-                        selectCurrentView[1] = container;
-                        selectCurrentView[1].textView.setBackgroundResource(R.drawable.background_test);
-                        selectCurrentView[1].textView.setTextColor(Color.WHITE);
-                        Log.e("SELECTED_DATE", selectCurrentView[1].textView.getText()+"");
+                                selectCurrentView[1].textView.setTextColor(Color.BLACK);
+                                selectCurrentView[1].textView.setBackground(null);
+                                if(selectCurrentView[0]!=null){
+                                    Log.e("DateEnabled number 5", selectCurrentView[0]+"");
+                                    DateEnable(selectCurrentView[0]);
+                                    Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
+                                }
+
+                                Log.e("DESELECTED_DATE", selectCurrentView[1].textView.getText()+"");
+
+                                weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
+                                DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
+
+                                selectCurrentView[1] = container;
+                                selectCurrentView[1].textView.setBackgroundResource(R.drawable.background_test);
+                                selectCurrentView[1].textView.setTextColor(Color.WHITE);
+                                Log.e("SELECTED_DATE", selectCurrentView[1].textView.getText()+"");
+
+                                turnToDate = 2;
+                            } else{
+                                Toast.makeText(getApplicationContext(), "Arrival date cannot be less then Departure Date!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+
+                            if(tempDate.isBefore(dateInArrival)){
+                                datesDeparture = LocalDate.of(year, month, date);
+                                selectCurrentView[0].textView.setTextColor(Color.BLACK);
+                                selectCurrentView[0].textView.setBackground(null);
+                                if(selectCurrentView[1]!=null){
+                                    Log.e("DateEnabled number 5", selectCurrentView[1]+"");
+                                    DateEnable(selectCurrentView[1]);
+                                    Log.e("NON_TOUCHED", selectCurrentView[1].textView.getText()+"");
+                                }
+
+                                Log.e("DESELECTED_DATE", selectCurrentView[0].textView.getText()+"");
+
+                                weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
+                                DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
+
+                                selectCurrentView[0] = container;
+                                selectCurrentView[0].textView.setBackgroundResource(R.drawable.background_test);
+                                selectCurrentView[0].textView.setTextColor(Color.WHITE);
+                                Log.e("SELECTED_DATE", selectCurrentView[0].textView.getText()+"");
+
+                                turnToDate = 1;
+                            } else{
+                                Toast.makeText(getApplicationContext(), "Departure date cannot be After Arrival Date!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        count[1] = 1;
                     }
 
                 });
@@ -573,15 +597,8 @@ public class FlightBooking_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 toast("DONE");
-                if(count[1]==0){
-                    log("HELLO", "MISSION PASSED");
-                    Day.setText(week[selectedDepartureDate.getDayOfWeek().getValue()]+", ");
-                    Date.setText(selectedDepartureDate.getDayOfMonth()+" "+monthName[selectedDepartureDate.getMonthValue()-1]+" "+selectedDepartureDate.getYear());
-//                    formatter.format(datesToShow.getDayOfMonth());
-                } else{
-                    log("FAILED", "MISSION FAILED");
-                    Day.setText(weekDayOfMonth[0]);
-                    Date.setText(DateOfMonth[0]);}
+                Day.setText(week[selectedDepartureDate.getDayOfWeek().getValue()-1]+", ");
+                Date.setText(selectedDepartureDate.getDayOfMonth()+" "+monthName[selectedDepartureDate.getMonthValue()-1]+" "+selectedDepartureDate.getYear());
 
                 dialog.cancel();
             }
@@ -708,7 +725,7 @@ public class FlightBooking_page extends AppCompatActivity {
         roundTrip.setChecked(true);
         returnTripDateContainer.setVisibility(View.VISIBLE);
         LocalDate returnDateToShow = datesDeparture.plusDays(1);
-        returnDay.setText(weekName[returnDateToShow.getDayOfWeek().getValue()]+", ");
+        returnDay.setText(weekName[returnDateToShow.getDayOfWeek().getValue()-1]+", ");
         returnDate.setText(returnDateToShow.getDayOfMonth()+" "+monthName[returnDateToShow.getMonthValue()-1]+" '"+returnDateToShow.getYear()%2000);
         returnTitle.setVisibility(View.GONE);
     }
