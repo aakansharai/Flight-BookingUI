@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.hardware.camera2.params.BlackLevelPattern;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -67,10 +68,11 @@ public class FlightBooking_page extends AppCompatActivity {
     RadioButton oneWay, roundTrip;
     RadioGroup tripTypeRadioGroup;
     RecyclerView arrivalCity;
-    Button searchFlightBTN;
+    TextView searchFlightBTN;
     String TravellerCount;
     int travCount;
     int turnToDate = 1;
+    int DS_A = 0;
     boolean dateGenerated = true;
     ConstraintLayout TC, DepartureDate, returnTripDateContainer;
     ArrayList<city> cities = new ArrayList<>();
@@ -265,7 +267,7 @@ public class FlightBooking_page extends AppCompatActivity {
         dialog.setContentView(v);
 
         ImageView close = dialog.findViewById(R.id.closeDialog);
-        Button doneCalendar = dialog.findViewById(R.id.doneCalendar);
+        TextView doneCalendar = dialog.findViewById(R.id.doneCalendar);
         TextView title = dialog.findViewById(R.id.DateTitle);
 
         title.setText("Select Departure city");
@@ -386,7 +388,6 @@ public class FlightBooking_page extends AppCompatActivity {
             public void onClick(View view) {
                 Log.e("WEEK DAYS ", datesDeparture.getDayOfWeek().getValue()+"");
                 Day.setText(weekName[datesDeparture.getDayOfWeek().getValue()-1]+", ");
-
                 Date.setText(datesDeparture.getDayOfMonth()+" "+monthName[datesDeparture.getMonthValue()-1]+" '"+datesDeparture.getYear());
 
                 dialog.cancel();
@@ -398,7 +399,6 @@ public class FlightBooking_page extends AppCompatActivity {
                 dialogC(dialog);
             }
         });
-
     }
 
 
@@ -409,8 +409,7 @@ public class FlightBooking_page extends AppCompatActivity {
         dialog.setContentView(v);
 
         ImageView close = dialog.findViewById(R.id.closeDialog);
-        Button doneCalendar = dialog.findViewById(R.id.doneCalendar);
-        Button arrivalBTN, departureBTN;
+        TextView doneCalendar = dialog.findViewById(R.id.doneCalendar);
         TextView title = dialog.findViewById(R.id.DateTitle);
 
         title.setText("Select Arrival city");
@@ -429,17 +428,11 @@ public class FlightBooking_page extends AppCompatActivity {
         String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
         calendarView = dialog.findViewById(R.id.calenderView);
-//        selectedDate = LocalDate.now();
-
 
         YearMonth currentMonth = YearMonth.from(LocalDate.now());
         YearMonth startMonth = currentMonth.minusMonths(0);
         YearMonth endMonth = currentMonth.plusMonths(12);
 
-
-        Log.e("CURR-MONTH", ""+currentMonth);
-        Log.e("START-MONTH",""+startMonth);
-        Log.e("END-MONTH",""+endMonth);
         Log.wtf("ARRIVAL DIALOG", "ARRIVAL DIALOG ENTERED ----------------");
 
         calendarView.setup(startMonth, endMonth, getFirstDayOfWeekFromLocal());
@@ -448,20 +441,25 @@ public class FlightBooking_page extends AppCompatActivity {
         calendarView.setOrientation(RecyclerView.VERTICAL);
         calendarView.setMonthHeaderResource(R.layout.title_calendar);
 
+
+//============    I M P O R T A N T    I N I T I A L I S A T I O N S    =======================
+
+
         final String[] weekDayOfMonth = new String[2];
         final String[] DateOfMonth= new String[2];
-        final DayViewContainer[] selectCurrentView = new DayViewContainer[2];
+        final DayViewContainer[] selectCurrentView = new DayViewContainer[3];
         List<DayViewContainer> listOfDates = new ArrayList<>();
-//        final LocalDate[] selectCurrentView = new LocalDate[2];
 
         final LocalDate[] selectedDateArrivalDate = {LocalDate.now()};
         LocalDate selectedDate = datesDeparture;
         LocalDate arrDateInArrCalendar = dateInArrival;
-        Log.wtf("DATE DEPARTURE", datesDeparture+"");
         final LocalDate[] selectedDepartureDate = {datesDeparture.plusDays(1)};
 
         final int[] count = {0, 0};
         turnToDate = 1;
+
+
+//============    B I N D I N G     S T A R T    =======================
 
         calendarView.setDayBinder(new MonthDayBinder<DayViewContainer>() {
 
@@ -471,24 +469,29 @@ public class FlightBooking_page extends AppCompatActivity {
                 return new DayViewContainer(view);
             }
 
+
+//============   D A Y    B I N D I N G    =======================
+
             @Override
             public void bind(@NonNull DayViewContainer container, CalendarDay calendarDay) {
                 container.textView.setText(String.valueOf(calendarDay.getDate().getDayOfMonth()));
 
-                    Log.wtf("DATE IS GENERATED","DATE IS GENERATED "+dateGenerated);
+                //============   PARTICULAR DAYS   =================
+//                label :
                     if(calendarDay.getPosition() == DayPosition.MonthDate) {
                         container.textView.setVisibility(View.VISIBLE);
+
                         if(calendarDay.getDate().isEqual(selectedDate) && selectCurrentView[1]==null) {
+                            Log.wtf("DEPARTURE DATE in ARRIVAL", selectedDate+"");
                             selectCurrentView[0] = container;
                             DateEnableDeparture(selectCurrentView[0]);
                         } else if(selectCurrentView[0]!=null  && calendarDay.getDate().isEqual(arrDateInArrCalendar)) {
-                            Log.e("CAME IN", selectCurrentView[1]+"");
                             selectCurrentView[1] = container;
-                            Log.e("M I DOUMB", selectCurrentView[1]+"");
                             DateEnableArrival(selectCurrentView[1]);
 
                             count[0] = 2;
-                        } else if(calendarDay.getDate().isAfter(datesDeparture) && calendarDay.getDate().isBefore(dateInArrival)){
+                        }
+                        else if(calendarDay.getDate().isAfter(datesDeparture) && calendarDay.getDate().isBefore(dateInArrival)){
                             container.textView.setTextColor(Color.BLACK);
                             container.textView.setBackgroundColor(Color.LTGRAY);
                         }
@@ -509,70 +512,253 @@ public class FlightBooking_page extends AppCompatActivity {
                 container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-//                        turnToDate = 1 ---> For Arrival Date selection
-//                        turnToDate = 2 ---> For Departure Date selection
+//                        turnToDate = 1 ---> For Departure Date selection
+//                        turnToDate = 2 ---> For Arrival Date selection
                         int date = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("dd")));
                         int month = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("MM")));
                         int year = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("yyyy")));
                         LocalDate tempDate = LocalDate.of(year, month, date);
-                        if(turnToDate==1){
-                            if(tempDate.isAfter(datesDeparture)){
-                                dateInArrival = LocalDate.of(year, month, date);
 
-                                selectCurrentView[1].textView.setTextColor(Color.BLACK);
-                                selectCurrentView[1].textView.setBackground(null);
-                                if(selectCurrentView[0]!=null){
-                                    Log.e("DateEnabled number 5", selectCurrentView[0]+"");
-                                    DateEnableDeparture(selectCurrentView[0]);
-                                    Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
-                                }
+//                        if(turnToDate==1) {
+//                            if(tempDate.isAfter(datesDeparture)){
+//                                dateInArrival = LocalDate.of(year, month, date);
+//
+//                                selectCurrentView[1].textView.setTextColor(Color.BLACK);
+//                                selectCurrentView[1].textView.setBackground(null);
+//                                if(selectCurrentView[0]!=null) {
+////                                    Log.e("DateEnabled number 5", selectCurrentView[0]+"");
+//                                    DateEnableDeparture(selectCurrentView[0]);
+//                                    Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
+//                                }
+//                                weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
+//                                DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
+//
+////                                datesDeparture = LocalDate.of(year, month, date).minusDays(1);
+//                                selectedDepartureDate[0] = LocalDate.of(year, month, date);
+//                                selectCurrentView[1] = container;
+//                                DateEnableArrival(selectCurrentView[1]);
+////                                selectCurrentView[1].textView.setBackgroundResource(R.drawable.background_test);
+////                                selectCurrentView[1].textView.setTextColor(Color.WHITE);
+//
+//                                turnToDate = 2;
+//                            } else{
+//                                Toast.makeText(getApplicationContext(), "Arrival date cannot be less then Departure Date!", Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                        }
+//                        else {
+//                            if(tempDate.isBefore(dateInArrival)){
+//                                datesDeparture = LocalDate.of(year, month, date);
+//                                selectCurrentView[0].textView.setTextColor(Color.BLACK);
+//                                selectCurrentView[0].textView.setBackground(null);
+//                                if(selectCurrentView[1]!=null){
+//                                    Log.e("DateEnabled number 5", selectCurrentView[1]+"");
+//                                    DateEnableArrival(selectCurrentView[1]);
+//                                }
+//                                weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
+//                                DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
+//
+////                                dateInArrival = LocalDate.of(year, month, date);
+//                                selectCurrentView[0] = container;
+//                                DateEnableDeparture(selectCurrentView[0]);
+////                                selectCurrentView[0].textView.setBackgroundResource(R.drawable.background_test);
+////                                selectCurrentView[0].textView.setTextColor(Color.WHITE);
+//                                Log.e("SELECTED_DATE", selectCurrentView[0].textView.getText()+"");
+//
+//                                turnToDate = 1;
+//                                Log.wtf("SHUSHMAAAAAAAAAA after 2", turnToDate+"");
+//                            } else{
+//                                Toast.makeText(getApplicationContext(), "Departure date cannot be After Arrival Date!", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
 
-                                Log.e("DESELECTED_DATE", selectCurrentView[1].textView.getText()+"");
+// =====================    D E P A R T U R E   S E L E C T I O N     I N    A R R I V A L      ====================
+                        if(DS_A==0) {
+                            LocalDate dep = LocalDate.of(year, month, date);
+                            LocalDate arr = dep.plusDays(1);
+//                            Log.wtf("WHAT THE HELL", DS_A+"");
+//                            Log.e("CONTAINER", container.textView.getText()+"");
+//                            Log.e("Calendar data", calendarDay.getDate()+"");
+//                            Log.e("LocalDate data", dep+"");
 
-                                weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
-                                DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
-
-                                datesDeparture = LocalDate.of(year, month, date).minusDays(1);
-                                selectedDepartureDate[0] = LocalDate.of(year, month, date);
-                                selectCurrentView[1] = container;
-                                DateEnableArrival(selectCurrentView[1]);
-//                                selectCurrentView[1].textView.setBackgroundResource(R.drawable.background_test);
-//                                selectCurrentView[1].textView.setTextColor(Color.WHITE);
-                                Log.e("SELECTED_DATE", selectCurrentView[1].textView.getText()+"");
-
-                                turnToDate = 2;
-                            } else{
-                                Toast.makeText(getApplicationContext(), "Arrival date cannot be less then Departure Date!", Toast.LENGTH_SHORT).show();
-                            }
-
-                        } else {
-
-                            if(tempDate.isBefore(dateInArrival)){
-                                datesDeparture = LocalDate.of(year, month, date);
-                                selectCurrentView[0].textView.setTextColor(Color.BLACK);
+//                            if(calendarDay.getDate().isEqual(dep)){
+                                datesDeparture = dep;
+                                dateInArrival = arr;
+//                                Log.e("HERE 'Dep", container.textView.getText()+" ");
+                                selectCurrentView[2]  = container;
+                                selectCurrentView[2].textView.setTextColor(Color.BLACK);
+                                selectCurrentView[2].textView.setBackground(null);
                                 selectCurrentView[0].textView.setBackground(null);
-                                if(selectCurrentView[1]!=null){
-                                    Log.e("DateEnabled number 5", selectCurrentView[1]+"");
-                                    DateEnableArrival(selectCurrentView[1]);
-                                    Log.e("NON_TOUCHED", selectCurrentView[1].textView.getText()+"");
+                                selectCurrentView[0].textView.setTextColor(Color.BLACK);
+                                selectCurrentView[1].textView.setBackground(null);
+                                selectCurrentView[1].textView.setTextColor(Color.BLACK);
+//                            } else if(calendarDay.getDate().isEqual(arr)){
+//                                Log.e("HERE 'Arr", container.textView.getText()+"");
+//                                container.textView.setTextColor(Color.WHITE);
+//                                container.textView.setBackgroundColor(Color.RED);
+//                            }
+//                            Log.wtf("DP", datesDeparture+"");
+//                            Log.wtf("AD", dateInArrival+"");
+
+                            DS_A = 1;
+                            toast("DONE WITH DSA");
+                        } else {
+                            // =====================    D E P A R T U R E  ====================
+                            if(turnToDate==1) {
+                                if(tempDate.isBefore(dateInArrival)) {
+//                                    toast("departure selected "+dateInArrival);
+
+                                    datesDeparture = LocalDate.of(year, month, date);
+//                                    selectCurrentView[0].textView.setTextColor(Color.BLACK);
+//                                    selectCurrentView[0].textView.setBackground(null);
+//                                    selectCurrentView[2].textView.setTextColor(Color.BLACK);
+//                                    selectCurrentView[2].textView.setBackground(null);
+                                    if(selectCurrentView[1]!=null){
+                                        DateEnableArrival(selectCurrentView[1]);
+                                    }
+
+                                    weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
+                                    DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
+
+                                    selectCurrentView[0] = container;
+                                    DateEnableDeparture(selectCurrentView[0]);
+
+                                    turnToDate = 2;
+
+                                    LocalDate depTempDate = datesDeparture.plusDays(1);
+//
+                                    while(depTempDate.isBefore(dateInArrival)){
+//                                        Log.w("D 2 A", depTempDate+" ");
+                                        if(calendarDay.getDate().isEqual(depTempDate)){
+                                            container.textView.setTextColor(Color.RED);
+//                                            System.out.println("container.textView = " + container.textView.getTextColors());
+//                                        container.textView.setTextColor(Color.BLACK);
+//                                            Log.e("DATE", container.textView.getTextColors()+"");
+                                        }
+                                        depTempDate = depTempDate.plusDays(1);
+                                    }
+
+                                } else{
+                                    Toast.makeText(getApplicationContext(), "Departure date cannot be After Arrival Date!", Toast.LENGTH_SHORT).show();
                                 }
-
-                                Log.e("DESELECTED_DATE", selectCurrentView[0].textView.getText()+"");
-
-                                weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
-                                DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
-
-                                selectCurrentView[0] = container;
-                                DateEnableDeparture(selectCurrentView[0]);
-//                                selectCurrentView[0].textView.setBackgroundResource(R.drawable.background_test);
-//                                selectCurrentView[0].textView.setTextColor(Color.WHITE);
-                                Log.e("SELECTED_DATE", selectCurrentView[0].textView.getText()+"");
-
-                                turnToDate = 1;
-                            } else{
-                                Toast.makeText(getApplicationContext(), "Departure date cannot be After Arrival Date!", Toast.LENGTH_SHORT).show();
                             }
+
+// ======================  A R R I V A L   ====================
+
+                            else {
+                                if(tempDate.isAfter(datesDeparture)){
+//                                    toast("arrival selected");
+//                                bind(container, calendarDay);
+
+                                    dateInArrival = LocalDate.of(year, month, date);
+
+                                    selectCurrentView[1].textView.setTextColor(Color.BLACK);
+                                    selectCurrentView[1].textView.setBackground(null);
+                                    if(selectCurrentView[0]!=null) {
+                                        DateEnableDeparture(selectCurrentView[0]);
+                                        Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
+                                    }
+
+                                    weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
+                                    DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
+
+                                    selectedDepartureDate[0] = LocalDate.of(year, month, date);
+                                    selectCurrentView[1] = container;
+                                    DateEnableArrival(selectCurrentView[1]);
+
+                                    turnToDate = 1;
+//                                LocalDate depTempDate = datesDeparture;
+//                                while(depTempDate.isEqual(dateInArrival) || depTempDate.isAfter(dateInArrival)){
+
+//                                    container.textView.setTextColor(Color.BLACK);
+//                                    container.textView.setBackgroundColor(Color.LTGRAY);
+//                                    depTempDate = datesDeparture.plusDays(1);
+//                                }
+//                                bind(container, calendarDay);
+                                } else{
+                                    Toast.makeText(getApplicationContext(), "Arrival date cannot be less then Departure Date!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+
                         }
+
+//// =====================    D E P A R T U R E  ====================
+//                        if(turnToDate==1) {
+//                            if(tempDate.isBefore(dateInArrival)) {
+//                                datesDeparture = LocalDate.of(year, month, date);
+//                                selectCurrentView[0].textView.setTextColor(Color.BLACK);
+//                                selectCurrentView[0].textView.setBackground(null);
+//                                if(selectCurrentView[1]!=null){
+//                                    Log.e("DateEnabled number 5", selectCurrentView[1]+"");
+//                                    DateEnableArrival(selectCurrentView[1]);
+//                                }
+//
+//                                weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
+//                                DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
+//
+//                                selectCurrentView[0] = container;
+//                                DateEnableDeparture(selectCurrentView[0]);
+//
+//                                Log.e("SELECTED_DATE", selectCurrentView[0].textView.getText()+"");
+//
+//                                turnToDate = 2;
+//                                Log.wtf("SHUSHMAAAAAAAAAA after 1", turnToDate+"");
+//
+//                                LocalDate depTempDate = datesDeparture.plusDays(1);
+////
+//                                while(depTempDate.isBefore(dateInArrival)){
+//                                    Log.w("D 2 A", depTempDate+" ");
+//                                    if(calendarDay.getDate().isEqual(depTempDate)){
+//                                        container.textView.setTextColor(Color.RED);
+//                                        System.out.println("container.textView = " + container.textView.getTextColors());
+////                                        container.textView.setTextColor(Color.BLACK);
+//                                        Log.e("DATE", container.textView.getTextColors()+"");
+////                                        container.textView.setBackgroundColor(Color.YELLOW);
+//                                    }
+//                                    depTempDate = depTempDate.plusDays(1);
+//                                }
+//
+//                            } else{
+//                                Toast.makeText(getApplicationContext(), "Departure date cannot be After Arrival Date!", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//
+//// ======================  A R R I V A L   ====================
+//
+//                        else {
+//                            if(tempDate.isAfter(datesDeparture)){
+////                                bind(container, calendarDay);
+//
+//                                dateInArrival = LocalDate.of(year, month, date);
+//
+//                                selectCurrentView[1].textView.setTextColor(Color.BLACK);
+//                                selectCurrentView[1].textView.setBackground(null);
+//                                if(selectCurrentView[0]!=null) {
+//                                    DateEnableDeparture(selectCurrentView[0]);
+//                                    Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
+//                                }
+//
+//                                weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
+//                                DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
+//
+//                                selectedDepartureDate[0] = LocalDate.of(year, month, date);
+//                                selectCurrentView[1] = container;
+//                                DateEnableArrival(selectCurrentView[1]);
+//
+//                                turnToDate = 1;
+////                                LocalDate depTempDate = datesDeparture;
+////                                while(depTempDate.isEqual(dateInArrival) || depTempDate.isAfter(dateInArrival)){
+//
+////                                    container.textView.setTextColor(Color.BLACK);
+////                                    container.textView.setBackgroundColor(Color.LTGRAY);
+////                                    depTempDate = datesDeparture.plusDays(1);
+////                                }
+////                                bind(container, calendarDay);
+//                            } else{
+//                                Toast.makeText(getApplicationContext(), "Arrival date cannot be less then Departure Date!", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
                         count[1] = 1;
                     }
 
@@ -601,16 +787,14 @@ public class FlightBooking_page extends AppCompatActivity {
             }
         });
 
-//        SimpleDateFormat formatter = new SimpleDateFormat("YY, dd MMM 'yy");
-
         doneCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toast("DONE");
-                Day.setText(week[selectedDepartureDate[0].getDayOfWeek().getValue()-1]+", ");
+                Day.setText(week[selectedDepartureDate[0].getDayOfWeek().getValue()]+", ");
                 Date.setText(selectedDepartureDate[0].getDayOfMonth()+" "+monthName[selectedDepartureDate[0].getMonthValue()-1]+" "+ selectedDepartureDate[0].getYear()%2000);
 
-                departureDay.setText(week[datesDeparture.getDayOfWeek().getValue()-1]+", ");
+                departureDay.setText(week[datesDeparture.getDayOfWeek().getValue()]+", ");
                 departureDate.setText(datesDeparture.getDayOfMonth()+" "+monthName[datesDeparture.getMonthValue()-1]+" '"+datesDeparture.getYear()%2000);
                 dialog.cancel();
             }
@@ -625,105 +809,105 @@ public class FlightBooking_page extends AppCompatActivity {
         return selectCurrentView[1];
     }
 
-    private LocalDate calenderCreate(CalendarView calendarView, LocalDate selectedDate) {
-        YearMonth currentMonth = YearMonth.from(LocalDate.now());
-        YearMonth startMonth = currentMonth.minusMonths(0);
-        YearMonth endMonth = currentMonth.plusMonths(12);
-
-        String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
-
-
-        Log.e("CURR-MONTH", ""+currentMonth);
-        Log.e("START-MONTH",""+startMonth);
-        Log.e("END-MONTH",""+endMonth);
-
-        calendarView.setup(startMonth, endMonth, getFirstDayOfWeekFromLocal());
-        calendarView.scrollToMonth(currentMonth);
-
-        calendarView.setOrientation(RecyclerView.VERTICAL);
-        calendarView.setMonthHeaderResource(R.layout.title_calendar);
-
-        final String[] weekDayOfMonth = new String[1];
-        final String[] DateOfMonth= new String[1];
-
-        calendarView.setDayBinder(new MonthDayBinder<DayViewContainer>() {
-            DayViewContainer selectedToday;
-            @NonNull
-            @Override
-            public DayViewContainer create(@NonNull View view) {
-                return new DayViewContainer(view);
-            }
-
-            @Override
-            public void bind(@NonNull DayViewContainer container, CalendarDay calendarDay) {
-
-                container.textView.setText(String.valueOf(calendarDay.getDate().getDayOfMonth()));
-
-                log("SELECTED DATE 2" ,String.valueOf(selectedDate));
-
-                if(calendarDay.getPosition() == DayPosition.MonthDate){
-                    container.textView.setVisibility(View.VISIBLE);
-                    if(calendarDay.getDate().isEqual(selectedDate)){
-                        selectedToday = container;
-                        Log.e("DateEnabled number 6", selectedToday+"");
-                        DateEnable(selectedToday);
-                    } else if(calendarDay.getDate().isBefore(selectedDate)){
-                        container.textView.setTextColor(Color.LTGRAY);
-                        container.textView.setEnabled(false);
-                    }
-                    else{
-                        container.textView.setTextColor(Color.BLACK);
-                        container.textView.setBackground(null);
-                    }
-                } else{
-                    container.textView.setVisibility(View.INVISIBLE);
-                }
-
-
-                container.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        selectedToday.textView.setTextColor(Color.BLACK);
-                        selectedToday.textView.setBackground(null);
-
-                        int date = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("dd")));
-                        int month = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("MM")));
-                        int year = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("yy")));
-                        weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
-                        DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
-
-                        selectedToday = container;
-                        selectedToday.textView.setBackgroundResource(R.drawable.background_test);
-                        selectedToday.textView.setTextColor(Color.WHITE);
-                        Toast.makeText(FlightBooking_page.this, ""+container, Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-//                toast(""+container);
-//                DateEnable(selectCurrentView);
-            }
-        });
-
-        calendarView.setMonthHeaderBinder(new MonthHeaderFooterBinder<MonthViewContainer>() {
-            @NonNull
-            @Override
-            public MonthViewContainer create(@NonNull View view) {
-                return new MonthViewContainer(view);
-            }
-
-            @Override
-            public void bind(@NonNull MonthViewContainer container, CalendarMonth calendarMonth) {
-                int month = Integer.parseInt(calendarMonth.getYearMonth().format(DateTimeFormatter.ofPattern("MM")));
-                String year = calendarMonth.getYearMonth().format(DateTimeFormatter.ofPattern("yyyy"));
-                String[] monthName = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-
-                container.titlesMonthContainer.setText(monthName[(month-1)%12]+" "+year);
-
-            }
-        });
-
-        return selectedDate;
-    }
+//    private LocalDate calenderCreate(CalendarView calendarView, LocalDate selectedDate) {
+//        YearMonth currentMonth = YearMonth.from(LocalDate.now());
+//        YearMonth startMonth = currentMonth.minusMonths(0);
+//        YearMonth endMonth = currentMonth.plusMonths(12);
+//
+//        String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
+//
+//
+//        Log.e("CURR-MONTH", ""+currentMonth);
+//        Log.e("START-MONTH",""+startMonth);
+//        Log.e("END-MONTH",""+endMonth);
+//
+//        calendarView.setup(startMonth, endMonth, getFirstDayOfWeekFromLocal());
+//        calendarView.scrollToMonth(currentMonth);
+//
+//        calendarView.setOrientation(RecyclerView.VERTICAL);
+//        calendarView.setMonthHeaderResource(R.layout.title_calendar);
+//
+//        final String[] weekDayOfMonth = new String[1];
+//        final String[] DateOfMonth= new String[1];
+//
+//        calendarView.setDayBinder(new MonthDayBinder<DayViewContainer>() {
+//            DayViewContainer selectedToday;
+//            @NonNull
+//            @Override
+//            public DayViewContainer create(@NonNull View view) {
+//                return new DayViewContainer(view);
+//            }
+//
+//            @Override
+//            public void bind(@NonNull DayViewContainer container, CalendarDay calendarDay) {
+//
+//                container.textView.setText(String.valueOf(calendarDay.getDate().getDayOfMonth()));
+//
+//                log("SELECTED DATE 2" ,String.valueOf(selectedDate));
+//
+//                if(calendarDay.getPosition() == DayPosition.MonthDate){
+//                    container.textView.setVisibility(View.VISIBLE);
+//                    if(calendarDay.getDate().isEqual(selectedDate)){
+//                        selectedToday = container;
+//                        Log.e("DateEnabled number 6", selectedToday+"");
+//                        DateEnable(selectedToday);
+//                    } else if(calendarDay.getDate().isBefore(selectedDate)){
+//                        container.textView.setTextColor(Color.LTGRAY);
+//                        container.textView.setEnabled(false);
+//                    }
+//                    else{
+//                        container.textView.setTextColor(Color.BLACK);
+//                        container.textView.setBackground(null);
+//                    }
+//                } else{
+//                    container.textView.setVisibility(View.INVISIBLE);
+//                }
+//
+//
+//                container.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        selectedToday.textView.setTextColor(Color.BLACK);
+//                        selectedToday.textView.setBackground(null);
+//
+//                        int date = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("dd")));
+//                        int month = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("MM")));
+//                        int year = Integer.parseInt(calendarDay.getDate().format(DateTimeFormatter.ofPattern("yy")));
+//                        weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
+//                        DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
+//
+//                        selectedToday = container;
+//                        selectedToday.textView.setBackgroundResource(R.drawable.background_test);
+//                        selectedToday.textView.setTextColor(Color.WHITE);
+//                        Toast.makeText(FlightBooking_page.this, ""+container, Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                });
+////                toast(""+container);
+////                DateEnable(selectCurrentView);
+//            }
+//        });
+//
+//        calendarView.setMonthHeaderBinder(new MonthHeaderFooterBinder<MonthViewContainer>() {
+//            @NonNull
+//            @Override
+//            public MonthViewContainer create(@NonNull View view) {
+//                return new MonthViewContainer(view);
+//            }
+//
+//            @Override
+//            public void bind(@NonNull MonthViewContainer container, CalendarMonth calendarMonth) {
+//                int month = Integer.parseInt(calendarMonth.getYearMonth().format(DateTimeFormatter.ofPattern("MM")));
+//                String year = calendarMonth.getYearMonth().format(DateTimeFormatter.ofPattern("yyyy"));
+//                String[] monthName = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+//
+//                container.titlesMonthContainer.setText(monthName[(month-1)%12]+" "+year);
+//
+//            }
+//        });
+//
+//        return selectedDate;
+//    }
 
     private void oneWayTicket() {
         returnTripDateContainer = findViewById(R.id.returnDateContainer);
@@ -785,9 +969,9 @@ public class FlightBooking_page extends AppCompatActivity {
         dialog.setContentView(v);
 
         ImageView closeDialog = dialog.findViewById(R.id.closeDialog);
-        Button done = dialog.findViewById(R.id.DoneTC);
+        TextView done = dialog.findViewById(R.id.DoneTC);
 
-        Button AdultAdd, CAdd, IAdd, AdultReduce, CReduce, IReduce;
+        TextView AdultAdd, CAdd, IAdd, AdultReduce, CReduce, IReduce;
         TextView AdultCount, ChildrenCount, InfantCount;
 
         AdultAdd = dialog.findViewById(R.id.AaddBTN);
@@ -856,7 +1040,6 @@ public class FlightBooking_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 infant[0] = infant[0]+1;
-                Toast.makeText(FlightBooking_page.this, String.valueOf(adult[0]), Toast.LENGTH_SHORT).show();
                 if(infant[0]==adult[0]){
                     IAdd.setEnabled(false);
                     IReduce.setEnabled(true);

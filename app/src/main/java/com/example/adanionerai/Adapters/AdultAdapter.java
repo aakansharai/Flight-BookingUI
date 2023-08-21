@@ -73,7 +73,7 @@ public class AdultAdapter extends RecyclerView.Adapter<AdultAdapter.MyViewHolder
 
                 final int maxDay = cal.getTime().getDate();
                 final int maxMonth = cal.getTime().getMonth();
-                final int maxYear = cal.getWeekYear()-21;
+                final int maxYear = cal.getWeekYear()-12;
                 mCalendar.set(maxYear, maxMonth, maxDay);
                 mDialog.getDatePicker().setMaxDate(mCalendar.getTimeInMillis());
 

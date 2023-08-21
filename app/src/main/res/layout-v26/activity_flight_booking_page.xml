@@ -362,18 +362,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
 
-            <Button
+            <TextView
                 android:id="@+id/SearchFlightBTN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/blue_button"
-                android:paddingVertical="15dp"
+                android:paddingVertical="18dp"
+                android:gravity="center_horizontal"
                 android:text="Search Flights"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@+id/view4"
                 tools:layout_editor_absoluteX="30dp" />
 

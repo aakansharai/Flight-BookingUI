@@ -467,6 +467,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="20dp"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@id/checkBox_GST"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
@@ -965,17 +966,18 @@
             app:layout_constraintStart_toStartOf="@+id/bottomTotalAmount"
             app:layout_constraintTop_toBottomOf="@+id/bottomTotalAmount" />
 
-        <Button
+        <TextView
             android:id="@+id/proceedToPayment"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:background="@drawable/blue_button"
-            android:paddingVertical="10dp"
+            android:paddingVertical="13dp"
             android:text="Continue"
+            android:gravity="center_horizontal"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

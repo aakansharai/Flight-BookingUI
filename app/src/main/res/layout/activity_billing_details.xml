@@ -245,12 +245,14 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <TextView
         android:id="@+id/BillingDetails_AT_TravellersDetails_SubmitBTN"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginTop="30dp"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
         android:paddingVertical="18dp"
         android:background="@drawable/blue_button"
         android:text="Submit"

@@ -14,7 +14,10 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.adanionerai.Adapters.TravellersCountDetails_Adapter;
@@ -32,9 +35,10 @@ import java.util.Objects;
 
 public class TravellersDetails extends AppCompatActivity {
 
-    Button proceedToPayment;
+    TextView proceedToPayment;
     EditText emailId;
-    ConstraintLayout billingAddress;
+    ConstraintLayout billingAddress, GST_Container;
+    CheckBox GST;
     RecyclerView td;
     JSONObject obj;
     int adult, children, infant;
@@ -47,6 +51,8 @@ public class TravellersDetails extends AppCompatActivity {
         proceedToPayment = findViewById(R.id.proceedToPayment);
         billingAddress = findViewById(R.id.billingAddressContainer);
         emailId = findViewById(R.id.EmailId_TravellerDetails);
+        GST = findViewById(R.id.checkBox_GST);
+        GST_Container = findViewById(R.id.GST_DetailsContainer);
 
         String str = getIntent().getExtras().getString("OBJECT");
 
@@ -86,6 +92,18 @@ public class TravellersDetails extends AppCompatActivity {
             }
         });
 
+        // ================   G S T   C O N T A I N E R   ================
+        GST.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    GST_Container.setVisibility(View.VISIBLE);
+                } else{
+                    GST_Container.setVisibility(View.GONE);
+                }
+            }
+        });
+
         emailId.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -100,7 +118,6 @@ public class TravellersDetails extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private String loadJSON() {
