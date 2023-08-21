@@ -55,10 +55,10 @@ public class FlightBooking_page extends AppCompatActivity {
 
     FrameLayout fm;
     LocalDate datesDeparture = LocalDate.now();
-    LocalDate dateInArrival ;
+    LocalDate dateInArrival = datesDeparture.plusDays(1);
     JSONObject TravellerCountObject = new JSONObject();
     String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
-    String weekName[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    String weekName[] = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 
 
     // CLASS & TRAVELLERS
@@ -71,7 +71,7 @@ public class FlightBooking_page extends AppCompatActivity {
     String TravellerCount;
     int travCount;
     int turnToDate = 1;
-
+    boolean dateGenerated = true;
     ConstraintLayout TC, DepartureDate, returnTripDateContainer;
     ArrayList<city> cities = new ArrayList<>();
 
@@ -109,7 +109,7 @@ public class FlightBooking_page extends AppCompatActivity {
         String monthName[] = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
 
-        departureDay.setText(weekName[datesDeparture.getDayOfWeek().getValue()]+", ");
+        departureDay.setText(weekName[datesDeparture.getDayOfWeek().getValue()-1]+", ");
         departureDate.setText(datesDeparture.getDayOfMonth()+" "+monthName[datesDeparture.getMonthValue()-1]+" '"+datesDeparture.getYear()%2000);
 
 
@@ -384,7 +384,9 @@ public class FlightBooking_page extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                Day.setText(weekName[datesDeparture.getDayOfWeek().getValue()]+", ");
+                Log.e("WEEK DAYS ", datesDeparture.getDayOfWeek().getValue()+"");
+                Day.setText(weekName[datesDeparture.getDayOfWeek().getValue()-1]+", ");
+
                 Date.setText(datesDeparture.getDayOfMonth()+" "+monthName[datesDeparture.getMonthValue()-1]+" '"+datesDeparture.getYear());
 
                 dialog.cancel();
@@ -452,11 +454,11 @@ public class FlightBooking_page extends AppCompatActivity {
         List<DayViewContainer> listOfDates = new ArrayList<>();
 //        final LocalDate[] selectCurrentView = new LocalDate[2];
 
-        LocalDate selectedDateArrivalDate = LocalDate.now();
+        final LocalDate[] selectedDateArrivalDate = {LocalDate.now()};
         LocalDate selectedDate = datesDeparture;
         LocalDate arrDateInArrCalendar = dateInArrival;
         Log.wtf("DATE DEPARTURE", datesDeparture+"");
-        LocalDate selectedDepartureDate = datesDeparture.plusDays(1);
+        final LocalDate[] selectedDepartureDate = {datesDeparture.plusDays(1)};
 
         final int[] count = {0, 0};
         turnToDate = 1;
@@ -473,30 +475,34 @@ public class FlightBooking_page extends AppCompatActivity {
             public void bind(@NonNull DayViewContainer container, CalendarDay calendarDay) {
                 container.textView.setText(String.valueOf(calendarDay.getDate().getDayOfMonth()));
 
-                if(calendarDay.getPosition() == DayPosition.MonthDate) {
-                    container.textView.setVisibility(View.VISIBLE);
-                    if(calendarDay.getDate().isEqual(selectedDate) && selectCurrentView[1]==null) {
-                        count[0] = 1;
-                        selectCurrentView[0] = container;
-                        DateEnable(selectCurrentView[0]);
-                    } else if(selectCurrentView[0]!=null && count[0] == 1 && calendarDay.getDate().isEqual(arrDateInArrCalendar)){
-                        selectCurrentView[1] = container;
-                        DateEnable(selectCurrentView[1]);
-                        count[0] = 2;
-                    } else if(calendarDay.getDate().isAfter(datesDeparture) && calendarDay.getDate().isBefore(dateInArrival)){
-                        container.textView.setTextColor(Color.BLACK);
-                        container.textView.setBackgroundColor(Color.LTGRAY);
-                    }else if(calendarDay.getDate().isBefore(selectedDateArrivalDate)) {
-                        container.textView.setTextColor(Color.LTGRAY);
-                        container.textView.setEnabled(false);
+                    Log.wtf("DATE IS GENERATED","DATE IS GENERATED "+dateGenerated);
+                    if(calendarDay.getPosition() == DayPosition.MonthDate) {
+                        container.textView.setVisibility(View.VISIBLE);
+                        if(calendarDay.getDate().isEqual(selectedDate) && selectCurrentView[1]==null) {
+                            selectCurrentView[0] = container;
+                            DateEnableDeparture(selectCurrentView[0]);
+                        } else if(selectCurrentView[0]!=null  && calendarDay.getDate().isEqual(arrDateInArrCalendar)) {
+                            Log.e("CAME IN", selectCurrentView[1]+"");
+                            selectCurrentView[1] = container;
+                            Log.e("M I DOUMB", selectCurrentView[1]+"");
+                            DateEnableArrival(selectCurrentView[1]);
+
+                            count[0] = 2;
+                        } else if(calendarDay.getDate().isAfter(datesDeparture) && calendarDay.getDate().isBefore(dateInArrival)){
+                            container.textView.setTextColor(Color.BLACK);
+                            container.textView.setBackgroundColor(Color.LTGRAY);
+                        }
+                        else if(calendarDay.getDate().isBefore(selectedDateArrivalDate[0])) {
+                            container.textView.setTextColor(Color.LTGRAY);
+                            container.textView.setEnabled(false);
+                        } else {
+                            container.textView.setTextColor(Color.BLACK);
+                            container.textView.setBackground(null);
+                        }
                     } else {
-                        container.textView.setTextColor(Color.BLACK);
-                        container.textView.setBackground(null);
-//                        container.textView.setBackgroundColor(Color.LTGRAY);
+                        container.textView.setVisibility(View.INVISIBLE);
                     }
-                } else {
-                    container.textView.setVisibility(View.INVISIBLE);
-                }
+//                }
 
                 count[1] = 0;
 
@@ -517,7 +523,7 @@ public class FlightBooking_page extends AppCompatActivity {
                                 selectCurrentView[1].textView.setBackground(null);
                                 if(selectCurrentView[0]!=null){
                                     Log.e("DateEnabled number 5", selectCurrentView[0]+"");
-                                    DateEnable(selectCurrentView[0]);
+                                    DateEnableDeparture(selectCurrentView[0]);
                                     Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
                                 }
 
@@ -526,9 +532,12 @@ public class FlightBooking_page extends AppCompatActivity {
                                 weekDayOfMonth[0] = calendarDay.getDate().format(DateTimeFormatter.ofPattern("E"));
                                 DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
 
+                                datesDeparture = LocalDate.of(year, month, date).minusDays(1);
+                                selectedDepartureDate[0] = LocalDate.of(year, month, date);
                                 selectCurrentView[1] = container;
-                                selectCurrentView[1].textView.setBackgroundResource(R.drawable.background_test);
-                                selectCurrentView[1].textView.setTextColor(Color.WHITE);
+                                DateEnableArrival(selectCurrentView[1]);
+//                                selectCurrentView[1].textView.setBackgroundResource(R.drawable.background_test);
+//                                selectCurrentView[1].textView.setTextColor(Color.WHITE);
                                 Log.e("SELECTED_DATE", selectCurrentView[1].textView.getText()+"");
 
                                 turnToDate = 2;
@@ -544,7 +553,7 @@ public class FlightBooking_page extends AppCompatActivity {
                                 selectCurrentView[0].textView.setBackground(null);
                                 if(selectCurrentView[1]!=null){
                                     Log.e("DateEnabled number 5", selectCurrentView[1]+"");
-                                    DateEnable(selectCurrentView[1]);
+                                    DateEnableArrival(selectCurrentView[1]);
                                     Log.e("NON_TOUCHED", selectCurrentView[1].textView.getText()+"");
                                 }
 
@@ -554,8 +563,9 @@ public class FlightBooking_page extends AppCompatActivity {
                                 DateOfMonth[0] = ", "+date+" "+monthName[month-1]+" '"+year;
 
                                 selectCurrentView[0] = container;
-                                selectCurrentView[0].textView.setBackgroundResource(R.drawable.background_test);
-                                selectCurrentView[0].textView.setTextColor(Color.WHITE);
+                                DateEnableDeparture(selectCurrentView[0]);
+//                                selectCurrentView[0].textView.setBackgroundResource(R.drawable.background_test);
+//                                selectCurrentView[0].textView.setTextColor(Color.WHITE);
                                 Log.e("SELECTED_DATE", selectCurrentView[0].textView.getText()+"");
 
                                 turnToDate = 1;
@@ -597,9 +607,11 @@ public class FlightBooking_page extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 toast("DONE");
-                Day.setText(week[selectedDepartureDate.getDayOfWeek().getValue()-1]+", ");
-                Date.setText(selectedDepartureDate.getDayOfMonth()+" "+monthName[selectedDepartureDate.getMonthValue()-1]+" "+selectedDepartureDate.getYear());
+                Day.setText(week[selectedDepartureDate[0].getDayOfWeek().getValue()-1]+", ");
+                Date.setText(selectedDepartureDate[0].getDayOfMonth()+" "+monthName[selectedDepartureDate[0].getMonthValue()-1]+" "+ selectedDepartureDate[0].getYear()%2000);
 
+                departureDay.setText(week[datesDeparture.getDayOfWeek().getValue()-1]+", ");
+                departureDate.setText(datesDeparture.getDayOfMonth()+" "+monthName[datesDeparture.getMonthValue()-1]+" '"+datesDeparture.getYear()%2000);
                 dialog.cancel();
             }
         });
@@ -719,6 +731,7 @@ public class FlightBooking_page extends AppCompatActivity {
         returnTitle.setVisibility(View.VISIBLE);
     }
 
+    @SuppressLint("SetTextI18n")
     private void roundTrip() {
         roundTrip = findViewById(R.id.roundWay);
         returnTripDateContainer = findViewById(R.id.returnDateContainer);
@@ -726,6 +739,7 @@ public class FlightBooking_page extends AppCompatActivity {
         returnTripDateContainer.setVisibility(View.VISIBLE);
         LocalDate returnDateToShow = datesDeparture.plusDays(1);
         returnDay.setText(weekName[returnDateToShow.getDayOfWeek().getValue()-1]+", ");
+        Log.e("WEEK OF RETURN", weekName[returnDateToShow.getDayOfWeek().getValue()-1]);
         returnDate.setText(returnDateToShow.getDayOfMonth()+" "+monthName[returnDateToShow.getMonthValue()-1]+" '"+returnDateToShow.getYear()%2000);
         returnTitle.setVisibility(View.GONE);
     }
@@ -977,6 +991,16 @@ public class FlightBooking_page extends AppCompatActivity {
     private void DateEnable(DayViewContainer container) {
 //        container.textView = findViewById(R.id.)
         container.textView.setBackgroundResource(R.drawable.background_test);
+        container.textView.setTextColor(Color.WHITE);
+    }
+    private void DateEnableDeparture(DayViewContainer container) {
+//        container.textView = findViewById(R.id.)
+        container.textView.setBackgroundResource(R.drawable.background_departure_date);
+        container.textView.setTextColor(Color.WHITE);
+    }
+    private void DateEnableArrival(DayViewContainer container) {
+//        container.textView = findViewById(R.id.)
+        container.textView.setBackgroundResource(R.drawable.background_arrival_date);
         container.textView.setTextColor(Color.WHITE);
     }
 
