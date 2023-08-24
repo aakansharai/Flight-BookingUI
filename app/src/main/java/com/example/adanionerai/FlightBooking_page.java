@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.camera2.params.BlackLevelPattern;
 import android.os.Bundle;
@@ -49,6 +51,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.SimpleFormatter;
 
+//import kotlinx.coroutines.android.AndroidExceptionPreHandler;
+
 public class FlightBooking_page extends AppCompatActivity {
 
     // Add return
@@ -75,6 +79,7 @@ public class FlightBooking_page extends AppCompatActivity {
     int DS_A = 0;
     boolean dateGenerated = true;
     ConstraintLayout TC, DepartureDate, returnTripDateContainer;
+    ConstraintLayout parentView;
     ArrayList<city> cities = new ArrayList<>();
 
     @SuppressLint("MissingInflatedId")
@@ -312,7 +317,7 @@ public class FlightBooking_page extends AppCompatActivity {
             @NonNull
             @Override
             public DayViewContainer create(@NonNull View view) {
-                return new DayViewContainer(view);
+                return new DayViewContainer(view, FlightBooking_page.this);
             }
 
             @Override
@@ -340,7 +345,7 @@ public class FlightBooking_page extends AppCompatActivity {
                     container.textView.setVisibility(View.INVISIBLE);
                 }
 
-                container.setOnClickListener(new View.OnClickListener() {
+                container.textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         selectedToday.textView.setTextColor(Color.BLACK);
@@ -400,8 +405,6 @@ public class FlightBooking_page extends AppCompatActivity {
             }
         });
     }
-
-
     private DayViewContainer calendarArrival(View v, TextView Date, TextView Day, TextView DepartureDate, TextView DepartureDay) {
 
         final Dialog dialog = new Dialog(this);
@@ -466,7 +469,7 @@ public class FlightBooking_page extends AppCompatActivity {
             @NonNull
             @Override
             public DayViewContainer create(@NonNull View view) {
-                return new DayViewContainer(view);
+                return new DayViewContainer(view, FlightBooking_page.this);
             }
 
 
@@ -482,7 +485,7 @@ public class FlightBooking_page extends AppCompatActivity {
                         container.textView.setVisibility(View.VISIBLE);
 
                         if(calendarDay.getDate().isEqual(selectedDate) && selectCurrentView[1]==null) {
-                            Log.wtf("DEPARTURE DATE in ARRIVAL", selectedDate+"");
+                            Log.wtf("DEP in AR", selectedDate+"");
                             selectCurrentView[0] = container;
                             DateEnableDeparture(selectCurrentView[0]);
                         } else if(selectCurrentView[0]!=null  && calendarDay.getDate().isEqual(arrDateInArrCalendar)) {
@@ -505,11 +508,9 @@ public class FlightBooking_page extends AppCompatActivity {
                     } else {
                         container.textView.setVisibility(View.INVISIBLE);
                     }
-//                }
-
                 count[1] = 0;
 
-                container.setOnClickListener(new View.OnClickListener() {
+                container.textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 //                        turnToDate = 1 ---> For Departure Date selection
@@ -576,44 +577,87 @@ public class FlightBooking_page extends AppCompatActivity {
                         if(DS_A==0) {
                             LocalDate dep = LocalDate.of(year, month, date);
                             LocalDate arr = dep.plusDays(1);
-//                            Log.wtf("WHAT THE HELL", DS_A+"");
-//                            Log.e("CONTAINER", container.textView.getText()+"");
-//                            Log.e("Calendar data", calendarDay.getDate()+"");
-//                            Log.e("LocalDate data", dep+"");
 
-//                            if(calendarDay.getDate().isEqual(dep)){
-                                datesDeparture = dep;
-                                dateInArrival = arr;
-//                                Log.e("HERE 'Dep", container.textView.getText()+" ");
-                                selectCurrentView[2]  = container;
-                                selectCurrentView[2].textView.setTextColor(Color.BLACK);
-                                selectCurrentView[2].textView.setBackground(null);
-                                selectCurrentView[0].textView.setBackground(null);
-                                selectCurrentView[0].textView.setTextColor(Color.BLACK);
-                                selectCurrentView[1].textView.setBackground(null);
-                                selectCurrentView[1].textView.setTextColor(Color.BLACK);
-//                            } else if(calendarDay.getDate().isEqual(arr)){
-//                                Log.e("HERE 'Arr", container.textView.getText()+"");
-//                                container.textView.setTextColor(Color.WHITE);
-//                                container.textView.setBackgroundColor(Color.RED);
+                            datesDeparture = dep;
+                            dateInArrival = arr;
+                            DateDisable(selectCurrentView[0]);
+                            DateDisable(selectCurrentView[1]);
+
+                            selectCurrentView[0] = container;
+
+                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                            int nextIndex = sharedPreferences.getInt("nextIndex", -1);
+                            Log.e("INDEX", nextIndex+" ");
+
+                            if (nextIndex != -1) {
+                                // Find the parent ViewGroup of the DayViewContainers
+                                ViewGroup parentViewGroup = findViewById(R.id.DayView_constraintLayout); // Replace with your actual parent ViewGroup
+
+
+                                // Check if the nextIndex is within valid bounds
+//                                if (nextIndex + 1 < parentViewGroup.getChildCount()) {
+//                                    // Access the next DayViewContainer
+//                                    DayViewContainer nextContainer = (DayViewContainer) parentViewGroup.getChildAt(nextIndex + 1);
+//                                    // Now you have access to the next DayViewContainer, you can interact with it
+//                                }
+                            }
+
+//                            // Get the parent view containing the containers
+//                            parentView = dialog.findViewById(R.id.DayView_constraintLayout);
+//
+//                            View nextContainerView = parentView.getChildAt(nextIndex);
+//
+//                            if(nextIndex < parentView.getChildCount()) {
+//                                Log.e("INDEX", parentView.getChildCount()+" "+nextIndex);
+//                                TextView departure = nextContainerView.findViewById(R.id.calendarDayText);
+//
+//                                Log.wtf("Child text date", departure.getText()+" "+departure.getTextColors()+" " );
+//                                DateDisable(selectCurrentView[1]);
 //                            }
-//                            Log.wtf("DP", datesDeparture+"");
-//                            Log.wtf("AD", dateInArrival+"");
+
+
+
+//                            if (nextContainerView instanceof DayViewContainer) {
+//                                DayViewContainer nextContainer = (DayViewContainer) nextContainerView;
+//                                selectCurrentView[1] = nextContainer;
+//                            }
+
+
+//                            if (nextContainerView instanceof DayViewContainer) {
+//                                DayViewContainer nextContainer = (DayViewContainer) nextContainerView;
+//                                selectCurrentView[1] = nextContainer;
+//                            }
+
+//                            if (nextIndex < parentView.getChildCount()) {
+//                                Log.e("INDEX", parentView.getChildCount()+" "+nextIndex);
+//
+//                                View nextContainerView = parentView.getChildAt(nextIndex);
+//                                Log.wtf("CHILD at index", nextContainerView+"");
+////                                if (nextContainerView instanceof DayViewContainer) {
+////                                    DayViewContainer nextContainer = (DayViewContainer) nextContainerView;
+////                                    // Now you have access to the next DayViewContainer
+////                                    selectCurrentView[1] = nextContainer;
+////                                }
+//                            }
+
+//                            selectCurrentView[1] ;
+//                            selectCurrentView[1] = calendarView.getDaySize().toString()
+
+                            selectCurrentView[0].textView.setTextColor(Color.WHITE);
+                            selectCurrentView[0].textView.setBackgroundResource(R.drawable.background_departure_date);
 
                             DS_A = 1;
-                            toast("DONE WITH DSA");
+//                            toast("DONE WITH DSA  "+dateInArrival);
                         } else {
-                            // =====================    D E P A R T U R E  ====================
+                        // =====================    D E P A R T U R E    ====================
                             if(turnToDate==1) {
                                 if(tempDate.isBefore(dateInArrival)) {
 //                                    toast("departure selected "+dateInArrival);
 
                                     datesDeparture = LocalDate.of(year, month, date);
-//                                    selectCurrentView[0].textView.setTextColor(Color.BLACK);
-//                                    selectCurrentView[0].textView.setBackground(null);
-//                                    selectCurrentView[2].textView.setTextColor(Color.BLACK);
-//                                    selectCurrentView[2].textView.setBackground(null);
-                                    if(selectCurrentView[1]!=null){
+                                    DateDisable(selectCurrentView[0]);
+                                    if(selectCurrentView[1]!=null) {
+                                        Log.wtf("Container 2", selectCurrentView[1].textView.getText()+"");
                                         DateEnableArrival(selectCurrentView[1]);
                                     }
 
@@ -626,14 +670,9 @@ public class FlightBooking_page extends AppCompatActivity {
                                     turnToDate = 2;
 
                                     LocalDate depTempDate = datesDeparture.plusDays(1);
-//
                                     while(depTempDate.isBefore(dateInArrival)){
-//                                        Log.w("D 2 A", depTempDate+" ");
                                         if(calendarDay.getDate().isEqual(depTempDate)){
                                             container.textView.setTextColor(Color.RED);
-//                                            System.out.println("container.textView = " + container.textView.getTextColors());
-//                                        container.textView.setTextColor(Color.BLACK);
-//                                            Log.e("DATE", container.textView.getTextColors()+"");
                                         }
                                         depTempDate = depTempDate.plusDays(1);
                                     }
@@ -648,12 +687,8 @@ public class FlightBooking_page extends AppCompatActivity {
                             else {
                                 if(tempDate.isAfter(datesDeparture)){
 //                                    toast("arrival selected");
-//                                bind(container, calendarDay);
-
                                     dateInArrival = LocalDate.of(year, month, date);
-
-                                    selectCurrentView[1].textView.setTextColor(Color.BLACK);
-                                    selectCurrentView[1].textView.setBackground(null);
+                                    DateDisable(selectCurrentView[1]);
                                     if(selectCurrentView[0]!=null) {
                                         DateEnableDeparture(selectCurrentView[0]);
                                         Log.e("NON_TOUCHED", selectCurrentView[0].textView.getText()+"");
@@ -764,7 +799,6 @@ public class FlightBooking_page extends AppCompatActivity {
 
                 });
 
-                listOfDates.add(new DayViewContainer(container.textView));
             }
         });
 //        log(selectCurrentView[0]+"");
@@ -807,6 +841,11 @@ public class FlightBooking_page extends AppCompatActivity {
         });
 
         return selectCurrentView[1];
+    }
+
+    private void DateDisable(DayViewContainer dayViewContainer) {
+        dayViewContainer.textView.setTextColor(Color.BLACK);
+        dayViewContainer.textView.setBackground(null);
     }
 
 //    private LocalDate calenderCreate(CalendarView calendarView, LocalDate selectedDate) {
@@ -1097,6 +1136,7 @@ public class FlightBooking_page extends AppCompatActivity {
                 infant[0] = infant[0]-1;
                 if(infant[0]<1){
                     IReduce.setEnabled(false);
+                    IAdd.setEnabled(true);
                 } else if(infant[0]<=adult[0]) {
                     IAdd.setEnabled(true);
                 } else {

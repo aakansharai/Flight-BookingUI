@@ -11,5 +11,7 @@
     <color name="grey">#8B959593</color>
     <color name="greyText">#C35A5A59</color>
 
+    <color name="textBG">#c8deef</color>
+
 
 </resources>

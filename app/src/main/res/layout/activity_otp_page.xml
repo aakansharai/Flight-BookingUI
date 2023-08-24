@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OTP_Page">
+
+
+    <ImageView
+        android:id="@+id/imageLanguage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        app:tint="@color/black"
+        android:src="@drawable/arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Verify Phone Number"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageLanguage" />
+
+    <TextView
+        android:id="@+id/messageOfCodeSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Code is sent to 8010099900"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/verification_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="50dp"
+        android:background="@color/textBG"
+        android:textColorHint="@color/blackLight"
+        android:paddingVertical="14dp"
+        android:maxLength="6"
+        android:inputType="number"
+        android:fontFamily="monospace"
+        android:hint="OTP"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageOfCodeSend" />
+
+    <TextView
+        android:id="@+id/invalidOTP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Invalid OTP"
+        android:textColor="#DA0606"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toStartOf="@+id/verification_code"
+        app:layout_constraintTop_toBottomOf="@+id/verification_code" />
+
+    <TextView
+        android:id="@+id/otpNotReceived"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/asap"
+        android:text="didn't receive OTP?"
+        android:textColor="#194877"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/verification_code"
+        app:layout_constraintStart_toStartOf="@+id/verification_code"
+        app:layout_constraintTop_toBottomOf="@+id/verification_code" />
+
+
+    <TextView
+        android:id="@+id/verifyOTP_BTN"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/blue_button"
+        android:fontFamily="@font/asap"
+        android:gravity="center_horizontal"
+        android:paddingVertical="15dp"
+        android:layout_marginTop="50dp"
+        android:text="Verify  &amp;  Continue"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/otpNotReceived"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
