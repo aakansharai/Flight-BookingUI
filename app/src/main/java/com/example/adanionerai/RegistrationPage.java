@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +18,12 @@ import com.hbb20.CountryCodePicker;
 
 public class RegistrationPage extends AppCompatActivity {
 
-    TextView name, email, phoneNumber, register;
+    TextView name, email, phoneNumber, register, profileText;
     CountryCodePicker code;
-    CardView profilePicture;
-    ImageView SelectedProfile;
+    CardView profilePictureContainer;
+    ImageView SelectedProfile, previewIMG;
     FirebaseAuth auth;
+    int REQUEST_CODE = 200;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -33,18 +35,40 @@ public class RegistrationPage extends AppCompatActivity {
         email = findViewById(R.id.EmailId_AtRegistration);
         phoneNumber = findViewById(R.id.PhoneNumber);
         code = findViewById(R.id.country_code);
-        profilePicture = findViewById(R.id.profileCard);
+        profilePictureContainer = findViewById(R.id.profileCard);
         register = findViewById(R.id.NextBTN_phoneNumberCheck);
+        profileText = findViewById(R.id.cardText_Profile);
+        SelectedProfile = findViewById(R.id.ProfileImageSelected);
+        previewIMG = findViewById(R.id.PreviewIMG);
 
-        auth = FirebaseAuth.getInstance();
+        SelectedProfile.setVisibility(View.GONE);
+        previewIMG.setVisibility(View.VISIBLE);
+        profileText.setVisibility(View.VISIBLE);
 
         String phone = getIntent().getStringExtra("phone");
+        String codeC = getIntent().getStringExtra("countryCode");
+        int getCode = Integer.parseInt(codeC);
+
         Log.wtf("GOT THE NUMBER", phone);
+
+        auth = FirebaseAuth.getInstance();
+        phoneNumber.setText(phone);
+        code.setDefaultCountryUsingPhoneCode(getCode);
+        Log.e("COUNTRY Code", code.getSelectedCountryCode());
 
         String CountryCode = code.getSelectedCountryCode();
 
-        String ValidPhoneNumber = CountryCode+phone;
+        String ValidPhoneNumber = "+"+CountryCode+" "+phoneNumber.getText().toString();
         Log.wtf("valid phone ", ValidPhoneNumber);
+
+        profilePictureContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageChooser();
+
+            }
+        });
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,10 +78,31 @@ public class RegistrationPage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    private void imageChooser() {
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), REQUEST_CODE);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+            if(resultCode == RESULT_OK) {
+                if(requestCode == REQUEST_CODE) {
+                    Uri selectedImage = data.getData();
 
+                    if(null != selectedImage) {
+                        SelectedProfile.setImageURI(selectedImage);
+                        SelectedProfile.setVisibility(View.VISIBLE);
+                        previewIMG.setVisibility(View.GONE);
+                        profileText.setVisibility(View.GONE);
+                    }
+                }
+            }
 
     }
 }

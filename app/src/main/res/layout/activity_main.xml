@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/Logo"
-        android:layout_width="180dp"
-        android:layout_height="72dp"
+        android:layout_width="129dp"
+        android:layout_height="43dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/tripzygo"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,21 +21,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:hint="Enter Phone number"
+        android:hint="We'll send an OTP via SMS"
         android:inputType="phone"
-        android:textSize="14sp"
-        android:layout_marginBottom="5dp"
         android:textAlignment="textStart"
         android:textColorHint="@color/blackLight"
-        app:layout_constraintBottom_toTopOf="@+id/PhoneNumberContainer"
-        app:layout_constraintStart_toStartOf="@+id/PhoneNumberContainer" />
+        android:textSize="12sp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/PhoneNumberContainer"
+        app:layout_constraintTop_toBottomOf="@+id/PhoneNumberContainer" />
+
+
+    <CheckBox
+        android:id="@+id/checkBox_WhatsApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@drawable/whatsapp"
+        android:drawablePadding="10dp"
+        android:textSize="12sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:text="Get Booking Details &amp; Updates on whatsApp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TitlePhoneEnter" />
+
+
+    <TextView
+        android:id="@+id/loginSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login or Sign up"
+        android:textAlignment="center"
+        android:textColor="@color/blackLight"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/Logo"
+        app:layout_constraintStart_toStartOf="@+id/Logo"
+        app:layout_constraintTop_toBottomOf="@+id/Logo" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/PhoneNumberContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/background_circle_black"
         android:paddingHorizontal="15dp"
         android:paddingVertical="15dp"
@@ -43,7 +74,7 @@
         android:textColorHint="@color/blackLight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Logo">
+        app:layout_constraintTop_toBottomOf="@+id/loginSignUp">
 
         <com.hbb20.CountryCodePicker
             android:id="@+id/country_code_PHONE"
@@ -51,6 +82,7 @@
             android:layout_height="wrap_content"
             app:ccp_defaultNameCode="IND"
             app:ccp_showFlag="true"
+            app:ccp_showNameCode="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +105,7 @@
 
     <TextView
         android:id="@+id/NextBTN_phoneNumberCheck"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:background="@drawable/blue_button"
@@ -83,9 +115,9 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PhoneNumberContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_WhatsApp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
